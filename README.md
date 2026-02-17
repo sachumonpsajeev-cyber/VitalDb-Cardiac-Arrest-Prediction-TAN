@@ -20,7 +20,7 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 - Pandas, NumPy
 - Scikit-learn
 - TensorFlow/PyTorch
-- Jupyter Notebook
+- Google colab Notebook
 
 ## 📊 Dataset
 - **Source:** VitalDB (PhysioNet)
