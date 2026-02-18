@@ -4,6 +4,8 @@
 
 ## Paper 1: VitalDB Dataset (Lee et al. 2022)
 **Link:** https://www.nature.com/articles/s41597-022-01411-5
+**Citation:** Lee, H.C., Park, Y., Yoon, S.B. et al. VitalDB, a high-fidelity 
+multi-parameter vital signs database in surgical patients. Scientific Data 9, 279 (2022).
 **Date Read:** 18 Feb 2026
 
 ### 1. Problem They Solved
@@ -36,7 +38,7 @@ machine learning research on surgical patients.
 ### 6. Relevance to MY Project
 - Primary dataset for cardiac arrest prediction
 - No direct cardiac arrest label - will use mortality outcome
-- Key features: HR, Blood Pressure, SpO2, ECG
+- Key features: HR, Blood Pressure, SpO2,ECG (500Hz), BIS, Cardiac Output
 - Must handle missing data and noise in preprocessing
 - Label Strategy: Start with in-hospital mortality (exists in clinical_information.csv), 
   then attempt to derive cardiac arrest label from HR/BP collapse patterns as advanced step
