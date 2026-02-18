@@ -95,7 +95,7 @@ American Heart Association, 7(13), e008678. https://doi.org/10.1161/JAHA.118.008
 - MY improvement over Kwon: richer features (ECG, SpO2 continuous) + TAN architecture
 - Class imbalance lesson: expect ~2-3% positive rate in VitalDB — plan SMOTE or class weights
 - Prediction window to replicate: 0.5 to 24 hours before event
-```
+
 
 ### Paper 3: TSCAN — Temporal-Spatial Correlation Attention Network (Nie et al., 2024)
 **Link:** https://arxiv.org/abs/2306.01970 | https://ieeexplore.ieee.org/document/10234629/
