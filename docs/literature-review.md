@@ -38,6 +38,8 @@ machine learning research on surgical patients.
 - No direct cardiac arrest label - will use mortality outcome
 - Key features: HR, Blood Pressure, SpO2, ECG
 - Must handle missing data and noise in preprocessing
+- Label Strategy: Start with in-hospital mortality (exists in clinical_information.csv), 
+  then attempt to derive cardiac arrest label from HR/BP collapse patterns as advanced step
 
 ---
 
