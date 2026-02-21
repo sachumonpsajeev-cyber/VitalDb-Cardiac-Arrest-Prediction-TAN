@@ -7,6 +7,8 @@
 **Citation:** Lee, H.C., Park, Y., Yoon, S.B. et al. VitalDB, a high-fidelity 
 multi-parameter vital signs database in surgical patients. Scientific Data 9, 279 (2022).
 **Date Read:** 18 Feb 2026
+> 🔴 **BASE PAPER** — Primary dataset for entire thesis
+
 
 ### 1. Problem They Solved
 No large scale high resolution biosignal dataset existed for 
@@ -52,6 +54,9 @@ Based on Deep Learning for Predicting In-Hospital Cardiac Arrest. Journal of the
 American Heart Association, 7(13), e008678. https://doi.org/10.1161/JAHA.118.008678
 **Link:** https://www.ahajournals.org/doi/10.1161/JAHA.118.008678
 **Date Read:** 19 Feb 2026
+> 🔴 **BASE PAPER** — Primary benchmark, AUROC 0.850 target to beat
+
+
 
 ### 1. Problem They Solved
 - Traditional early warning systems (like MEWS) had low sensitivity and high false alarm rates
@@ -100,6 +105,9 @@ American Heart Association, 7(13), e008678. https://doi.org/10.1161/JAHA.118.008
 ### Paper 3: TSCAN — Temporal-Spatial Correlation Attention Network (Nie et al., 2024)
 **Link:** https://arxiv.org/abs/2306.01970 | https://ieeexplore.ieee.org/document/10234629/
 **Date Read:** 19 Feb 2026
+> 🔴 **BASE PAPER** — Primary architecture reference for TAN model
+
+
 
 ### 1. Problem They Solved
 * ICU clinical data is multivariate and temporal — conventional models struggled to capture both dimensions simultaneously
