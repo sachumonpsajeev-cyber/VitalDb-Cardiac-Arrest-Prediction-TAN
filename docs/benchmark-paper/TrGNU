@@ -27,6 +27,9 @@ generalisation.
 - External validation: eICU-CRD dataset
 - Class imbalance: present (rare CA events)
 
+*Notes by: Sachu Mon Puthenpuraickkal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
+
+
 ## Method / Model
 - Architecture: TrGRU hybrid
   - 3 stacked Transformer encoder layers (self-attention)
