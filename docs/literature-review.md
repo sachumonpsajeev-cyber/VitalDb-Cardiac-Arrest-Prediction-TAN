@@ -159,3 +159,5 @@ American Heart Association, 7(13), e008678. https://doi.org/10.1161/JAHA.118.008
 * **Benchmark reference** — TSCAN's 90.7% AUROC on mortality provides a strong ICU prediction performance anchor for contextualising my results
 * **Interpretability validation** — TSCAN proves attention-based ICU models can surface clinically meaningful features (BP, HR), supporting my TAN design choice
 * **Cite in:** Methodology chapter (justifying TAN architecture), Related Work section (positioning against SOTA), and Discussion (comparing interpretability findings)
+
+*Notes by: Sachu Mon Puthenpuraickkal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
