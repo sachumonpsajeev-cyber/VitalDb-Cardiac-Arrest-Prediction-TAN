@@ -84,3 +84,5 @@ generalisation.
 - AUROC 0.957 sets the performance ceiling to compare against
 - Interpretability gap they flag = motivation for TAN's attention
   weights as a transparency mechanism
+
+*Notes by: Sachu Mon Puthenpuraickkal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
