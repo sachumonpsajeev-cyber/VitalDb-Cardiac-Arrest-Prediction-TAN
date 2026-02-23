@@ -1,6 +1,6 @@
 # Paper Notes: Kim et al. 2024
 
-> 🟡 **SUPPORTING PAPER** — Informs prediction window, baseline model choice, and imbalance handling strategy
+> 🟢 **SUPPORTING PAPER** — Informs prediction window, baseline model choice, and imbalance handling strategy
 
 ---
 
@@ -15,7 +15,7 @@
 | **Link** | https://pmc.ncbi.nlm.nih.gov/articles/PMC11445627/ |
 | **Citation** | Kim, Y.K., Seo, W.D., Lee, S.J. et al. Early prediction of cardiac arrest in the intensive care unit using explainable machine learning: Retrospective study. *J Med Internet Res* 26, e62890 (2024). |
 | **Read Date** | Feb 21, 2026 |
-| **Category** | 🟡 Supporting Paper |
+| **Category** | 🟢 Supporting Paper |
 | **Thesis Relevance** | ⭐⭐⭐⭐⭐ High — LGBM baseline + 24hr prediction window reference + imbalance handling strategy |
 
 ---
