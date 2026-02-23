@@ -1,6 +1,6 @@
 # Paper Notes: Kim et al. 2019 (FAST-PACE)
 
-> 🟡 **SUPPORTING PAPER** — LSTM baseline for CA prediction + 1-6hr prediction window reference + feature minimalism strategy
+>  🟢**SUPPORTING PAPER** — LSTM baseline for CA prediction + 1-6hr prediction window reference + feature minimalism strategy
 
 ---
 
@@ -15,7 +15,7 @@
 | **Link** | https://pmc.ncbi.nlm.nih.gov/articles/PMC6780058/ |
 | **Citation** | Kim, J., Chae, M., Chang, H.J., Kim, Y.A., & Park, E. (2019). Predicting cardiac arrest and respiratory failure using feasible artificial intelligence with simple trajectories of patient data. *Journal of Clinical Medicine, 8*(9), 1336. |
 | **Read Date** | Feb 21, 2026 |
-| **Category** | 🟡 Supporting Paper |
+| **Category** |  🟢Supporting Paper |
 | **Thesis Relevance** | ⭐⭐⭐⭐⭐ High — LSTM for CA specifically + short prediction window + minimal feature set closest to VitalDB context |
 
 ---
