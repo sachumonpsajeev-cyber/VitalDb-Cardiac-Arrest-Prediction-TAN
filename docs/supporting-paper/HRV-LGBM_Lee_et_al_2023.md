@@ -1,6 +1,6 @@
 # Paper Notes: Lee et al. 2023 (HRV-LGBM)
 
-> 🟡 **SUPPORTING PAPER** — Real-time CA prediction using HRV + LGBM, 0.5–24hr window reference, ECG feature importance
+> 🟢 **SUPPORTING PAPER** — Real-time CA prediction using HRV + LGBM, 0.5–24hr window reference, ECG feature importance
 
 ---
 
@@ -16,7 +16,7 @@
 | **GitHub** | https://github.com/HyeonhoonLee/hrvarrest |
 | **Citation** | Lee, H., Yang, H.L., Ryu, H.G. et al. Real-time machine learning model to predict in-hospital cardiac arrest using heart rate variability in ICU. *npj Digital Medicine, 6*, 215 (2023). |
 | **Read Date** | Feb 21, 2026 |
-| **Category** | 🟡 Supporting Paper |
+| **Category** | 🟢 Supporting Paper |
 | **Thesis Relevance** | ⭐⭐⭐⭐⭐ High — LGBM with HRV features + 0.5–24hr prediction window + real-time framework + same hospital as VitalDB (Seoul National University Hospital) |
 
 ---
