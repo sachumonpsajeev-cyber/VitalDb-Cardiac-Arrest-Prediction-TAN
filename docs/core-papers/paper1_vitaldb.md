@@ -7,7 +7,7 @@ multi-parameter vital signs database in surgical patients. Scientific Data 9, 27
 **Date Read:** 18 Feb 2026
 > 🔴 **BASE PAPER** — Primary dataset for entire thesis
 
-
+---
 ### 1. Problem They Solved
 No large scale high resolution biosignal dataset existed for 
 machine learning research on surgical patients.
