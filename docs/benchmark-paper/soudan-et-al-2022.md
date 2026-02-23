@@ -1,4 +1,4 @@
-# Paper 7: Soudan et al. 2022 — Cardiac Arrest Prediction Using AI on EHR Vital Signs
+# Paper 8: Soudan et al. 2022 — Cardiac Arrest Prediction Using AI on EHR Vital Signs
 
 **Citation:** Soudan, B., Dandachi, F.F., & Bou Nassif, A. (2022). Attempting cardiac arrest prediction using artificial intelligence on vital signs from Electronic Health Records. *Smart Health*, 26, 100352. https://doi.org/10.1016/j.smhl.2022.100352 **Link:** https://www.sciencedirect.com/science/article/abs/pii/S2352648322000290 **Date Read:** 21 Feb 2026
 
