@@ -1,72 +1,62 @@
-# Paper 8: Soudan et al. (2022)
+# Paper 7: Soudan et al. 2022 — Cardiac Arrest Prediction Using AI on EHR Vital Signs
 
-## Citation
-Soudan B, Dandachi FF, Bou Nassif A. Predicting In-Hospital Cardiac 
-Arrest Using Vital Signs from Electronic Health Records. 
-Smart Health. 2022;24:100318. doi:10.1016/j.smhl.2022.100318
+**Citation:** Soudan, B., Dandachi, F.F., & Bou Nassif, A. (2022). Attempting cardiac arrest prediction using artificial intelligence on vital signs from Electronic Health Records. *Smart Health*, 26, 100352. https://doi.org/10.1016/j.smhl.2022.100352 **Link:** https://www.sciencedirect.com/science/article/abs/pii/S2352648322000290 **Date Read:** 21 Feb 2026
 
-## Category
-🟢 SUPPORTING PAPER — Multi-algorithm comparison study establishing
-   Random Forest as strong baseline and validating the 60-minute
-   prediction window for vital-sign-based CA prediction.
+> 🟡 **BENCHMARK PAPER** — Traditional ML baseline for cardiac arrest prediction using vital signs
 
-## Problem & Objective
-Addresses three specific research gaps in CA prediction:
-1. Which AI algorithm produces the most accurate CA prediction
-   from standard EHR vital signs?
-2. How many hours of vital signs are needed for acceptable accuracy?
-3. How far in advance can CA be predicted accurately?
-Goal: give caregivers advance notice to intervene or prepare
-immediate response before CA onset.
+---
 
-## Dataset
-- Source: Publicly available EHR dataset with documented
-  in-hospital CA occurrences (MIMIC-based)
-- Features: Standard vital signs routinely recorded in EHR
-  (SBP, HR, body temperature, respiratory rate — no lab data)
-- Observation window tested: 1h to 12h
-- Prediction horizon tested: immediate (next 60 min) and longer
+## 1. Problem They Solved
 
-## Method / Model
-- Six AI algorithms compared:
-  (includes Random Forest, Deep Learning/RNN-LSTM, and others)
-- Input: vital sign time-series from EHR records only
-- No non-standard or imaging-based features used
-- Evaluation metrics: Accuracy, F1-score, AUROC
+- No systematic comparison existed of AI algorithms for cardiac arrest prediction using routine EHR vital signs
+- Clinical teams lacked advance warning tools that could predict cardiac arrest before occurrence
+- Unclear which vital signs, which models, and which time windows produced the most accurate prediction
 
-## Key Results
-- Random Forest (RF) achieved best overall accuracy: >80%
-- Accuracy improves by >10% when prediction uses vital sign
-  data from the immediately preceding 60 minutes
-- Performance improves only ~3% when observation window
-  increases from 1h to 12h (diminishing returns beyond 1h)
-- Key finding: shorter, more recent input windows outperform
-  longer historical windows for imminent CA prediction
+---
 
-## Significant Contributions
-1. Confirmed CA can be predicted with reasonable accuracy from
-   standard EHR vital signs alone
-2. RF outperforms other algorithms tested including DL approaches
-3. 60-minute window identified as optimal prediction horizon
-4. Increasing observation range beyond 1h yields minimal gain
+## 2. Dataset Used
 
-## Limitations
-1. Abstract-level access only — full methodology details
-   (exact feature set, dataset size, class imbalance handling)
-   require full paper access
-2. Focuses on in-hospital ward setting — not intraoperative
-3. No temporal attention or sequence modelling architecture used
-4. No external validation reported
+- **Source:** Hospital Electronic Health Records (EHR)
+- **Data type:** Routinely recorded vital signs
+- **Time windows tested:** 1 to 12 hours prior to event
 
-## Relevance to This Thesis ⭐⭐⭐
-- Directly supports the CA-10 provisional prediction window
-  decision — their finding that 60 min is the optimal horizon
-  aligns with our 30/60/120/240 min multi-window strategy
-- Validates vital-sign-only feature set as sufficient for
-  meaningful CA prediction — supports VitalDB feature selection
-- RF as best-performing algorithm establishes it as a strong
-  baseline to compare against TAN in CA-15
-- Key insight: diminishing returns beyond 1h input window
-  informs input sequence length design (our 30-min input window)
-- Differentiator: we use TAN with attention on high-frequency
-  intraoperative data vs their RF on hourly EHR recordings
+---
+
+## 3. Methodology
+
+- Compared **six AI algorithms:** Random Forest, and five others (logistic regression, SVM, decision tree, KNN, neural network)
+- Tested multiple vital sign combinations and time windows systematically
+- Goal: identify optimal model + feature + window combination for CA prediction
+
+---
+
+## 4. Results
+
+| Finding | Detail |
+|---|---|
+| Best model | **Random Forest — >80% accuracy** |
+| Best time window | **Immediately preceding 60 minutes** |
+| Accuracy gain | +10% improvement using last 60 min vs longer windows |
+
+---
+
+## 5. Limitations
+
+- Traditional ML only — no deep learning or attention mechanisms
+- EHR vital signs only — no high-resolution waveform data
+- No external dataset validation
+- Accuracy metric used — AUROC not reported, limiting direct comparison
+
+---
+
+## 6. Relevance to My Project
+
+- Establishes that **vital signs alone** are sufficient signal for cardiac arrest prediction
+- Confirms **60-minute time window** as clinically meaningful prediction horizon — informs my sliding window design
+- Random Forest baseline provides a **traditional ML benchmark** to compare against my deep learning TAN model
+- Demonstrates the field's progression from simple ML toward the deep learning approach I am implementing
+- **Cite in:** Related Work (traditional ML approaches), Discussion (comparison with non-attention models)
+
+---
+
+*Notes by: Sachu Mon Puthenpuraickkal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
