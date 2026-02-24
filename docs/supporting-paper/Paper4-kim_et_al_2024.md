@@ -1,4 +1,4 @@
-# Paper Notes: Kim et al. 2024
+# Paper 4: Kim et al. 2024
 
 > 🟢 **SUPPORTING PAPER** — Informs prediction window, baseline model choice, and imbalance handling strategy
 
