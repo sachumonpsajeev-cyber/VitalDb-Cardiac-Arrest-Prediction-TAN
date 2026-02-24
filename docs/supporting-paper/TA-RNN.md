@@ -1,4 +1,4 @@
-# Paper 8: Al Olaimat & Bozdag 2024 (TA-RNN)
+# Paper 9: Al Olaimat & Bozdag 2024 (TA-RNN)
 
 > 🟢 **SUPPORTING PAPER** — Time-aware RNN with dual attention for irregular EHR data — architectural foundation for TAN model
 
