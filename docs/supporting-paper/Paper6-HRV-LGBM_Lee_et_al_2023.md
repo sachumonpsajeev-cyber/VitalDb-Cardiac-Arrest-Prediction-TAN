@@ -1,4 +1,4 @@
-# Paper Notes: Lee et al. 2023 (HRV-LGBM)
+# Paper 6: Lee et al. 2023 (HRV-LGBM)
 
 > 🟢 **SUPPORTING PAPER** — Real-time CA prediction using HRV + LGBM, 0.5–24hr window reference, ECG feature importance
 
