@@ -1,4 +1,4 @@
-# Paper Notes: An et al. 2022 (TERTIAN)
+# Paper 10: An et al. 2022 (TERTIAN)
 
 > 🔴 **CORE PAPER** — Time-aware transformer + hierarchical attention network for ICU clinical prediction — direct architectural foundation for TAN model
 
