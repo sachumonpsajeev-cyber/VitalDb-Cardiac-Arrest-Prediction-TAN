@@ -1,4 +1,4 @@
-# Paper Notes: Kim et al. 2019 (FAST-PACE)
+# Paper 5: Kim et al. 2019 (FAST-PACE)
 
 >  🟢**SUPPORTING PAPER** — LSTM baseline for CA prediction + 1-6hr prediction window reference + feature minimalism strategy
 
