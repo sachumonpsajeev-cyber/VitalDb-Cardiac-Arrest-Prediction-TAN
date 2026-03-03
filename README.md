@@ -1,56 +1,88 @@
-# Cardiac Arrest Prediction using TAN — VitalDB
+# Multi-Window Intraoperative Cardiac Arrest Prediction
+### Using Temporal Attention Networks on VitalDB Clinical Time-Series Data
 
-## Project
-Master Thesis — TSI University, Riga, Latvia  
-Predicting intraoperative cardiac arrest using Temporal Attention Network (TAN) on VitalDB dataset.
+**Student:** Sachu Mon Puthenpuraickpal Sajeev  
+**University:** TSI University, Riga, Latvia  
+**Submission:** April 24, 2026
 
-## Research Goal
-Multi-horizon early warning system predicting cardiac arrest at:
-- 30 minutes before arrest
-- 60 minutes before arrest
-- 2 hours before arrest
-- 4 hours before arrest
+---
+
+## Problem Statement
+
+Intraoperative cardiac arrest carries 50–70% mortality. Current early 
+warning systems use static thresholds and miss the temporal patterns 
+in continuous vital sign data. This thesis builds a deep learning model 
+to predict cardiac arrest before it happens — giving clinicians time to intervene.
+
+---
 
 ## Dataset
-- Source: VitalDB (Lee et al. 2022)
-- Total cases: 6,388
-- CA cases: 70 (1.10%)
-- Non-CA cases: 6,318 (98.90%)
-- Class ratio: 90:1
-- Features: HR, SpO2, ETCO2, ART_MBP, ART_SBP, ART_DBP
 
-## Model
-- Primary: Temporal Attention Network (TAN)
-- Baselines: LSTM, Logistic Regression, MEWS/NEWS
-- Benchmark target: AUROC > 0.881 (HRV-LGBM 2023)
+| Item | Detail |
+|------|--------|
+| Source | VitalDB (Seoul National University Hospital) |
+| Cases | 6,388 perioperative surgical cases |
+| CA cases | ~70 (1.1%) — proxy: intraoperative epinephrine |
+| Class ratio | ~90:1 |
+| Signals | HR, SpO2, ETCO2, ART_MBP, ART_SBP, ART_DBP |
 
-## Project Structure
+---
+
+## Model Architecture — TAN-LSTM
 ```
-VitalDb-Cardiac-Arrest-Prediction-TAN/
-├── data/        # Dataset files
-├── notebooks/   # Jupyter notebooks
-├── src/         # Source code
-├── models/      # Trained models
-├── results/     # Results and plots
-└── docs/        # Documentation and paper notes
+Input (36 features) → LSTM Encoder (128 units, 2 layers)
+→ Temporal Attention Layer → Context Vector
+→ Dense(64) → ReLU → Dropout → Sigmoid Output
 ```
 
-## Technologies
-- Python, Pandas, NumPy
-- Scikit-learn, TensorFlow/PyTorch
-- Google Colab, VS Code
+---
 
-## Sprint Status
-Sprint 1 — 18 Feb to 3 Mar 2026
-- CA-1: Done — VitalDB paper read
-- CA-2: Done — GitHub setup
-- CA-3: Done — Data exploration complete
-- CA-9: Done — Class imbalance confirmed
-- CA-12: Done — Dev environment setup
-- CA-8: In Progress — Paper reading (3/15)
-- CA-10: In Progress — Prediction window defined (multi-horizon)
+## Prediction Windows
 
-## Author
-Sachu Mon Puthenpuraickkal Sajeev  
-TSI University, Riga, Latvia  
-2026
+| Window | Clinical Meaning | Expected AUROC |
+|--------|-----------------|----------------|
+| 30 min | Near-term detection | ~0.91+ |
+| 60 min | 1 hour early warning | ~0.89–0.91 |
+| 120 min | 2 hour early warning | ~0.85–0.89 |
+| 240 min | 4 hour early warning | ~0.80–0.86 |
+
+---
+
+## Baselines
+
+| Model | Type | Role |
+|-------|------|------|
+| Logistic Regression | Linear | Reference floor |
+| LightGBM | Gradient Boost | Direct baseline (Kim et al. 2021) |
+| LSTM | Deep Learning | Ablation — no attention |
+| **TAN-LSTM** | **Deep Learning + Attention** | **Proposed model** |
+
+---
+
+## Progress
+
+- [x] Section 1 — Data Exploration & Labels
+- [x] Section 2 — Feature Engineering (36 features × 4 windows)
+- [ ] Section 3 — Class Balancing (SMOTE-ENN)
+- [ ] Section 4 — Baseline Models
+- [ ] Section 5 — TAN-LSTM Ablation Study
+- [ ] Section 6 — Results & Comparison
+- [ ] Section 7 — Model Export
+
+---
+
+## Tech Stack
+
+Python · Pandas · NumPy · PyTorch · Scikit-learn · LightGBM · imbalanced-learn · Kaggle · GitHub
+
+LinkedIn
+□ Headline updated
+□ About section updated
+□ Thesis added as Featured project
+□ Skills added
+□ Open to Work turned ON
+
+GitHub
+□ Profile README created (sachumonpsajeev-cyber repo)
+□ Thesis repo README updated
+□ Thesis repo pinned on profile
