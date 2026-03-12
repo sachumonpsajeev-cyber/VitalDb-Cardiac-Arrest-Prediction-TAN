@@ -1,4 +1,4 @@
-# Paper 1: Lee et al. 2022 - VitalDB High-Fidelity Vital Signs Dataset
+# Paper 1: Lee et al. 2022 - VitalDB, a high-fidelity multi-parameter vital signs database in surgical patients
 
 **Citation:** Lee, H.C., Park, Y., Yoon, S.B. et al. VitalDB, a high-fidelity multi-parameter vital signs database in surgical patients. *Scientific Data* 9, 279 (2022). https://doi.org/10.1038/s41597-022-01411-5 **Link:** https://www.nature.com/articles/s41597-022-01411-5 **Date Read:** 18 Feb 2026
 
