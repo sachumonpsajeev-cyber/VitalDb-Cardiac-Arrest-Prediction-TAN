@@ -1,6 +1,6 @@
 # Paper 1: Lee et al. 2022 (VitalDB — High-Fidelity OR Dataset)
 
->  CORE PAPER — VitalDB: High-resolution intraoperative vital signs database enabling perioperative machine learning
+> 🔴 CORE PAPER — VitalDB: High-resolution intraoperative vital signs database enabling perioperative machine learning
 
 ---
 
@@ -16,7 +16,7 @@
 | Volume | 9, Article 279 |
 | DOI | 10.1038/s41597-022-01411-5 |
 | Read Date | Feb 18, 2026 |
-| Category | Core Paper |
+| Category | 🔴 Core Paper |
 | Thesis Relevance | Critical — primary dataset for intraoperative cardiac arrest prediction |
 
 ---
@@ -132,4 +132,6 @@ Lee, H. C., Park, Y., Yoon, S. B., et al. (2022). *VitalDB, a high-fidelity mult
 
 > VitalDB (Lee et al., 2022) is a high-resolution intraoperative dataset that enables machine learning models to capture fine-grained physiological dynamics during surgery. Unlike ICU datasets, it provides continuous waveform data, making it highly suitable for real-time perioperative prediction tasks such as intraoperative cardiac arrest.
 
+---
 
+*Notes by: Sachu Mon Puthenpuraickpal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
