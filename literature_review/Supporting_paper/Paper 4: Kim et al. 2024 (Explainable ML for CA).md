@@ -1,6 +1,6 @@
 # Paper 4: Kim et al. 2024 (Explainable ML for CA)
 
-> — Explainable machine learning model for cardiac arrest prediction using SHAP-based feature attribution
+> 🔵 SUPPORTING PAPER— Explainable machine learning model for cardiac arrest prediction using SHAP-based feature attribution
 
 ---
 
@@ -16,7 +16,7 @@
 | DOI | N/A |
 | Link | N/A |
 | Read Date | Feb 2026 |
-| Category | 🔴 |
+| Category | 🔵 SUPPORTING PAPER |
 | Thesis Relevance | Critical — Provides explainability framework (SHAP) directly relevant for validating attention in TAN |
 
 ---
