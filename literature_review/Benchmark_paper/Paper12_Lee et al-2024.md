@@ -5,7 +5,7 @@
 ---
 
 ## Metadata
-
+ 
 | Field | Details |
 |---|---|
 | **Title** | Prediction of In-Hospital Cardiac Arrest in the Intensive Care Unit: Machine Learning–Based Multimodal Approach |
