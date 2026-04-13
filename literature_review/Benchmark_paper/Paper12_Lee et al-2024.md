@@ -1,7 +1,7 @@
 # Paper 12: Lee et al. 2024 (RF+LSTM+SVM — Multimodal IHCA)
 
 > 🟡 **BENCHMARK PAPER** — Multimodal stacked ensemble RF+LSTM+SVM for in-hospital cardiac arrest prediction — AUROC 0.91 at 1 hour before CA — MIMIC-IV + eICU external validation
-
+ 
 ---
 
 ## Metadata
