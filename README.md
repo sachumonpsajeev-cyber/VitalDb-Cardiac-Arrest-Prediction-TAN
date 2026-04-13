@@ -116,7 +116,7 @@ python cardiac_arrest_prediction.py
 
 ## 👤 Author
 
-**Sachu Mon Puthenpuraickpal Sajeev**
+**Sachu Mon Puthenpuraickpal Sajeev **
 MSc Data Science & AI — TSI University, Riga, Latvia
 LinkedIn: https://linkedin.com/in/sachu-mon
 GitHub: https://github.com/sachumonpsajeev-cyber
