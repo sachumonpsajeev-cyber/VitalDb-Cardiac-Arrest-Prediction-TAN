@@ -1,0 +1,191 @@
+# Paper 10: An et al. 2022 (TERTIAN — Time-Aware Transformer + Hierarchical Attention)
+
+> 🔴 CORE PAPER — Time-aware transformer with hierarchical attention for ICU prediction; primary architectural foundation for TAN
+
+---
+
+## Metadata
+
+| Field | Details |
+|---|---|
+| Title | TERTIAN: Clinical Endpoint Prediction in ICU via Time-Aware Transformer-Based Hierarchical Attention Network |
+| Authors | An Y, Liu Y, Chen X, Sheng Y |
+| Institution | Central South University, China |
+| Journal | Computational Intelligence and Neuroscience |
+| Year | 2022 |
+| DOI | 10.1155/2022/4207940 |
+| Links | https://pmc.ncbi.nlm.nih.gov/articles/PMC9788893/ \| https://onlinelibrary.wiley.com/doi/10.1155/2022/4207940 |
+| Read Date | Feb 24, 2026 |
+| Category | 🔴 Core Paper |
+| Thesis Relevance | Critical — architectural blueprint for TAN; addresses irregular time-series and multivariate clinical data |
+
+---
+
+## 1. Problem Addressed
+
+- Clinical time-series data in ICU is **irregularly sampled**, violating assumptions of standard deep learning models  
+- Existing models:
+  - Assume fixed time intervals  
+  - Fail to capture temporal gaps between events  
+- Clinical data is **heterogeneous**:
+  - Vital signs  
+  - Laboratory tests  
+  - Prescriptions  
+- Traditional scoring systems (e.g., APACHE, SAPS):
+  - Use static snapshots  
+  - Ignore temporal evolution  
+- No unified framework existed for **irregular, multivariate, heterogeneous clinical time-series modeling**
+
+---
+
+## 2. Dataset Used
+
+| Field | Details |
+|---|---|
+| Primary Dataset | MIMIC-III |
+| Secondary Dataset | MIMIC-IV |
+| Setting | ICU |
+| Task | In-hospital mortality prediction |
+| Input Window | First 48 hours after ICU admission |
+| Data Types | Vital signs, laboratory tests, prescriptions |
+
+---
+
+## 3. Methodology
+
+### Model: TERTIAN (Time-Aware Transformer-Based Hierarchical Attention Network)
+
+---
+
+### Component 1 — Heterogeneous Event Representation
+
+- Separate encoders for each data modality:
+  - **Vital signs:** Time-aware Transformer  
+  - **Lab tests:** Time-aware Transformer  
+  - **Prescriptions:** Embedding layer  
+- Captures modality-specific temporal patterns  
+
+---
+
+### Component 2 — Hierarchical Feature Fusion
+
+- Multi-level attention mechanism:
+  - Combines vital signs and lab tests  
+  - Integrates treatment (prescription) data  
+- Learns interactions between different clinical data types  
+- More effective than simple concatenation or standard fusion  
+
+---
+
+### Component 3 — Prediction Layer
+
+- Final patient representation used for:
+  - Binary classification (mortality: yes/no)
+
+---
+
+### Time-Aware Transformer (Key Innovation)
+
+- Explicitly models **time gaps (Δt)** between observations  
+- Encodes irregular temporal intervals into attention mechanism  
+- Captures **patient-specific temporal progression patterns**  
+- Avoids information loss caused by fixed time discretization  
+
+---
+
+## 4. Results
+
+| Metric | Performance |
+|---|---|
+| AUROC (MIMIC-III) | Outperforms all baselines |
+| AUROC (MIMIC-IV) | Outperforms all baselines |
+
+### Key Findings
+
+- Superior to:
+  - RNN / LSTM  
+  - Standard Transformer  
+  - Attention-based baselines  
+- **Time-aware mechanism is critical**:
+  - Removing it significantly reduces performance  
+- **Hierarchical fusion outperforms**:
+  - Early fusion  
+  - Late fusion  
+  - Simple concatenation  
+
+---
+
+## 5. Limitations
+
+- Evaluated only on MIMIC datasets (no external validation)  
+- Focused on mortality prediction, not acute events like cardiac arrest  
+- Uses 48-hour window (less suitable for short-term intraoperative prediction)  
+- Includes prescription data not available in intraoperative datasets like VitalDB  
+- No perioperative or surgical setting validation  
+
+---
+
+## 6. Relevance to This Thesis
+
+| Aspect | TERTIAN | This Thesis (TAN) |
+|---|---|---|
+| Core problem | Irregular ICU time-series | Irregular intraoperative signals |
+| Architecture | Time-aware Transformer + Hierarchical Attention | Temporal Attention Network |
+| Input data | Multimodal (vitals + labs + prescriptions) | Vital signs only |
+| Time modeling | Explicit Δt encoding | Temporal encoding / windowing |
+| Attention | Hierarchical multi-level | Feature-level temporal attention |
+| Dataset | MIMIC-III / IV | VitalDB |
+| Task | Mortality prediction | Cardiac arrest prediction |
+| Setting | ICU | Operating Room |
+
+---
+
+### Key Contributions to Thesis
+
+- Provides **direct architectural foundation** for TAN  
+- Validates importance of:
+  - Time-aware modeling for irregular data  
+  - Attention-based feature weighting  
+- Demonstrates superiority of:
+  - Transformer-based temporal modeling  
+  - Hierarchical attention fusion  
+- Supports interpretability through attention mechanisms  
+
+---
+
+### Research Gap Addressed
+
+- TERTIAN does not:
+  - Use high-frequency intraoperative data  
+  - Address cardiac arrest prediction  
+- This thesis extends:
+  - Time-aware attention → perioperative setting  
+  - Prediction → acute intraoperative cardiac arrest  
+
+---
+
+## 7. Position in Literature
+
+| Paper | Type | Setting | Contribution |
+|---|---|---|---|
+| RNN / LSTM | Model | ICU | Sequential modeling |
+| Transformer | Model | ICU | Attention-based temporal modeling |
+| TERTIAN (An et al. 2022) | Model | ICU | Time-aware + hierarchical attention |
+| TSCAN (Nie et al. 2024) | Model | ICU | Temporal + spatial attention |
+| This Thesis | Model | OR | TAN for cardiac arrest prediction |
+
+---
+
+## 8. Citation (APA)
+
+An, Y., Liu, Y., Chen, X., & Sheng, Y. (2022). *TERTIAN: Clinical endpoint prediction in ICU via time-aware transformer-based hierarchical attention network*. Computational Intelligence and Neuroscience, 2022, 4207940. https://doi.org/10.1155/2022/4207940
+
+---
+
+## 9. Summary (For Thesis Writing)
+
+> TERTIAN (An et al., 2022) introduces a time-aware transformer combined with hierarchical attention to model irregular and heterogeneous clinical time-series data. By explicitly incorporating time intervals and multi-level feature interactions, it significantly improves prediction performance over standard models. This architecture serves as the primary foundation for the proposed Temporal Attention Network (TAN), which adapts these concepts to high-frequency intraoperative data for cardiac arrest prediction.
+
+---
+
+*Notes by: Sachu Mon Puthenpuraickpal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
