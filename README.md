@@ -16,82 +16,91 @@
 
 Predict cardiac arrest 30, 60, 120, and 240 minutes before the event during surgery, using real-time vital sign signals — enabling clinical teams to intervene earlier.
 
-Target benchmark: AUROC > 0.91 (based on Lee et al., 2024)
-Achieved: Ensemble AUROC 0.9180 (vs. baseline LightGBM: 0.6295)
+- **Target benchmark:** AUROC > 0.91 (based on Lee et al., 2024)
+- **Achieved:** Ensemble AUROC **0.9180** (vs. baseline NEWS2: 0.6295)
 
 ---
 
 ## 📊 Results
 
-| Prediction Window | Model    | AUROC  | Baseline AUROC | Improvement |
-|-------------------|----------|--------|----------------|-------------|
-| 30 min            | TAN-LSTM | 0.918+ | 0.630          | +0.288      |
-| 60 min            | TAN-LSTM | 0.918+ | 0.630          | +0.288      |
-| 120 min           | TAN-LSTM | 0.918+ | 0.630          | +0.288      |
-| 240 min           | TAN-LSTM | 0.918+ | 0.630          | +0.288      |
-| Ensemble          | TAN-LSTM | 0.9180 | 0.6295         | +0.2885     |
+| Prediction Window | Model | AUROC | Baseline (NEWS2) | Improvement |
+|---|---|---|---|---|
+| 30 min | LSTM | 0.9312 | 0.6295 | +0.3017 |
+| 60 min | LightGBM | 0.9747 | 0.6295 | +0.3452 |
+| 120 min | TAN-LSTM | 0.918+ | 0.6295 | +0.288 |
+| 240 min | TAN-LSTM | 0.918+ | 0.6295 | +0.288 |
+| Ensemble | TAN-LSTM | 0.9180 | 0.6295 | +0.2885 |
 
 ---
 
 ## 🏗️ Architecture
 
-Step 1: VitalDB Clinical Data (6,388 cases)
-Step 2: Feature Engineering — 36 statistical features × 6 vital signals (HR, SpO2, ETCO2, ART_MBP, ART_SBP, ART_DBP)
-Step 3: Class Imbalance Handling — SMOTE-ENN (90:1 ratio)
-Step 4: Temporal Attention Network — 4-Head Self-Attention → captures temporal dependencies
-Step 5: LSTM Layer → sequential pattern learning
-Step 6: Stratified 5-Fold Cross-Validation
-Step 7: Prediction Output → Cardiac Arrest Risk Score
+**Stage 1 — Per-Window Models:**
+- VitalDB Clinical Data (6,388 cases)
+- Feature Engineering: 36 statistical features × 6 vital signals (HR, SpO₂, ETCO₂, ART_MBP, ART_SBP, ART_DBP)
+- Class Imbalance Handling: SMOTE-ENN (90:1 ratio)
+- Models: LSTM, LightGBM, Random Forest, XGBoost, Logistic Regression
+- Stratified 5-Fold Cross-Validation per window (30 / 60 / 120 / 240 min)
+
+**Stage 2 — TAN Aggregation:**
+- 4-Head Self-Attention Network (cross-window)
+- Learns temporal importance across all 4 prediction horizons
+- Hybrid Ensemble: LSTM 10% + TAN 90% (grid search optimized)
+- Output: Cardiac Arrest Risk Score
 
 ---
 
 ## 📁 Dataset
 
-| Property           | Details                                                      |
-|--------------------|--------------------------------------------------------------|
-| Source             | VitalDB — Seoul National University Hospital                 |
-| Cases              | 6,388 perioperative surgical cases                           |
-| Vital Signals      | HR, SpO2, ETCO2, ART_MBP, ART_SBP, ART_DBP                  |
-| Features Extracted | 36 statistical features (mean, std, min, max, range, slope)  |
-| Class Imbalance    | 90:1 (non-arrest : arrest)                                   |
-| Prediction Windows | 30 / 60 / 120 / 240 minutes before event                     |
+| Property | Details |
+|---|---|
+| Source | VitalDB — Seoul National University Hospital |
+| Cases | 6,388 perioperative surgical cases |
+| CA Patients | 65 confirmed cardiac arrest cases |
+| Vital Signals | HR, SpO₂, ETCO₂, ART_MBP, ART_SBP, ART_DBP |
+| Features Extracted | 36 statistical features (mean, std, min, max, range, slope) |
+| Class Imbalance | 90:1 (non-arrest : arrest) |
+| Prediction Windows | 30 / 60 / 120 / 240 minutes before event |
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Deep Learning: PyTorch (TAN-LSTM custom architecture)
-- ML Baselines: LightGBM, standard LSTM, Logistic Regression
-- Data: Pandas, NumPy, Scikit-learn
-- Imbalance Handling: SMOTE-ENN (imbalanced-learn)
-- Validation: Stratified 5-Fold Cross-Validation
-- Environment: Google Colab, VS Code, GitHub
+- **Deep Learning:** PyTorch (TAN-LSTM custom architecture)
+- **ML Baselines:** LightGBM, Random Forest, XGBoost, Logistic Regression
+- **Data:** Pandas, NumPy, Scikit-learn
+- **Imbalance Handling:** SMOTE-ENN (imbalanced-learn)
+- **Explainability:** SHAP (SHapley Additive exPlanations)
+- **Validation:** Stratified 5-Fold Cross-Validation
+- **Environment:** Google Colab, VS Code, GitHub
 
 ---
 
 ## 🚀 Quick Start
 
+```bash
 git clone https://github.com/sachumonpsajeev-cyber/VitalDb-Cardiac-Arrest-Prediction-TAN
 cd VitalDb-Cardiac-Arrest-Prediction-TAN
 pip install -r requirements.txt
 python cardiac_arrest_prediction.py
+```
 
 ---
 
 ## 📌 Key Findings
 
-- TAN-LSTM outperforms LightGBM baseline by +0.29 AUROC on the same clinical cohort
-- 4-head self-attention effectively captures temporal dependencies in vital sign sequences
-- SMOTE-ENN is more effective than standard SMOTE for severe clinical class imbalance
+- TAN-LSTM achieves **AUROC 0.9180** vs NEWS2 baseline of 0.6295 (+0.2885)
+- Cross-window attention weights increase monotonically (0.197 → 0.228 → 0.269 → 0.307), proving physiological deterioration is detectable earliest at 240 minutes before arrest
+- TAN produces **66% fewer false alarms** than standard LSTM
+- SMOTE-ENN outperforms standard SMOTE for severe clinical class imbalance (90:1)
+- NEWS2 drops to AUROC 0.4345 in intraoperative setting — below random prediction
 - Multi-window approach (4 prediction horizons) improves clinical utility vs. single-window models
-- Ensemble of window-specific models further boosts overall prediction stability
 
 ---
 
 ## 👤 Author
 
-Sachu Mon Puthenpuraickpal Sajeev
+**Sachu Mon Puthenpuraickpal Sajeev**
 MSc Data Science & AI — TSI University, Riga, Latvia
 LinkedIn: https://linkedin.com/in/sachu-mon
 GitHub: https://github.com/sachumonpsajeev-cyber
-whatsapp: +371-22447242
