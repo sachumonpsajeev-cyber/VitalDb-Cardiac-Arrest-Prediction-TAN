@@ -97,6 +97,22 @@ python cardiac_arrest_prediction.py
 - Multi-window approach (4 prediction horizons) improves clinical utility vs. single-window models
 
 ---
+## 🖥️ Dashboard Screenshots
+
+### Real Data — Single Patient View
+[📄 View Full Dashboard — Real Single Patient](real-single.pdf)
+
+### Real Data — Compare 2 Patients
+[📄 View Full Dashboard — Real Two Patient Comparison](real-two%20patient.pdf)
+
+### Synthetic Mode — CA vs No-CA Overlay
+[📄 View Full Dashboard — Synthetic Overlay](syn-overlay.pdf)
+
+### Synthetic Mode — Side by Side
+[📄 View Full Dashboard — Synthetic Side by Side](syn-side.pdf)
+
+### Synthetic Mode — Single Patient
+[📄 View Full Dashboard — Synthetic Single Patient](syn-single.pdf)
 
 ## 👤 Author
 
