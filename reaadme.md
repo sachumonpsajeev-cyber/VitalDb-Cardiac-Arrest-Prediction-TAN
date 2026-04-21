@@ -95,16 +95,14 @@ The **NEWS2 score** (National Early Warning Score 2) is the most widely deployed
 
 The result: under general anaesthesia, a patient approaching cardiac arrest may score *lower* on NEWS2 than a stable patient, producing an inverted risk ranking. This thesis confirms this empirically — NEWS2 achieves **AUROC 0.4345 at 30 minutes, below random chance**.
 
-```
 NEWS2 in OR at 30 min:  AUROC 0.4345  ← WORSE THAN RANDOM
 ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
-```
 
 ---
 
 ## 🏗️ Architecture — Two-Stage TAN Pipeline
 
-```
+
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         VitalDB  (6,388 Surgeries)                          │
 │              6 Vital Channels × 4 Prediction Windows × 6 Descriptors        │
@@ -148,7 +146,7 @@ ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 │                                                                             │
 │   AUROC: 0.9180  │  Sensitivity: 83.1%  │  False Alarms: 263  │  FA:TP: 5:1 │
 └─────────────────────────────────────────────────────────────────────────────┘
-```
+
 
 ### Model Configurations
 
@@ -214,7 +212,7 @@ For each of the **six vital sign channels**, six statistical descriptors were ex
 
 The slope descriptor captures *directional* deterioration — a patient whose mean arterial pressure is declining is at higher risk than one whose average is identical but stable. The maximum captures *reserve capacity* — whether the patient can still reach an adequate peak blood pressure within the window.
 
-```python
+
 # Feature extraction per channel per window
 features = {
     f'{channel}_mean':  window_data.mean(),
@@ -224,7 +222,7 @@ features = {
     f'{channel}_range': window_data.max() - window_data.min(),
     f'{channel}_slope': np.polyfit(np.arange(len(window_data)), window_data, 1)[0]
 }
-```
+
 
 ---
 
@@ -243,12 +241,12 @@ All models were evaluated using **5-fold stratified cross-validation** with case
 
 The 90:1 imbalance ratio was addressed with model-specific strategies:
 
-```
+
 Classical ML   →  class_weight = 'balanced'  (inverse frequency weighting)
 LSTM           →  Youden-J optimal threshold  (post-hoc threshold selection)
 TAN            →  SMOTE-ENN (inside CV folds) + Focal Loss γ=2
 Ensemble       →  α = 0.90 TAN weight  (11-point grid search)
-```
+
 
 > ⚠️ **Critical implementation detail:** SMOTE-ENN was applied **exclusively inside each CV fold's training partition**. Applying SMOTE globally before splitting inflates performance estimates by allowing synthetic samples to leak into validation folds (Vaishali et al., 2025). This study implements the correct approach.
 
@@ -256,9 +254,9 @@ Ensemble       →  α = 0.90 TAN weight  (11-point grid search)
 
 The TAN training objective uses Focal Loss (Lin et al., 2017) with γ = 2:
 
-```
-FL(pt) = -(1 - pt)^γ × log(pt)
-```
+
+<img width="321" height="48" alt="image" src="https://github.com/user-attachments/assets/05ddd90e-e984-4103-ae17-b833974a778c" />
+
 
 At γ = 2, a correctly classified non-CA case (pt ≈ 1) receives approximately **96% reduction in loss contribution**, redirecting the optimiser's attention toward difficult CA-positive minority cases.
 
@@ -338,10 +336,9 @@ The TAN's cross-window attention weights increase monotonically from the 30-minu
 
 ### Clinical Translation
 
-```
 Current clinical practice assumes: 30-min window = most predictive (emergency focus)
 This model finds:              240-min window = most predictive (4 hours before event!)
-```
+
 
 If confirmed by future ablation studies, this implies that haemodynamic optimisation strategies could be applied **within the pre-operative preparation window** — before surgical stress is applied — rather than reactively after collapse begins.
 
@@ -367,12 +364,12 @@ Drew et al. (2014) documented that clinical staff begin **ignoring alarms** when
 - False alarm-to-true positive ratio exceeds **~9:1**
 - Positive predictive value falls below **~10%**
 
-```
+
 LightGBM:  44:1  FA:TP  →  Would be ignored by clinical staff
 LSTM:      27:1  FA:TP  →  Would be ignored by clinical staff
 TAN-LSTM:   5:1  FA:TP  →  ✅ Below alarm fatigue threshold
                 PPV ~17% →  ✅ Above clinical engagement threshold
-```
+
 
 The TAN ensemble is the **only model** that satisfies both clinical alarm management criteria simultaneously, while still detecting **83.1% of all cardiac arrests** (54 of 65 events).
 
@@ -515,7 +512,6 @@ pip install -r requirements.txt
 
 ### Run the Full Pipeline
 
-```bash
 # Stage 1: Feature extraction and per-window model training
 python src/feature_engineering.py --windows 30 60 120 240
 
@@ -527,11 +523,9 @@ python src/ensemble_search.py --alpha_steps 11
 
 # Full evaluation with SHAP
 python cardiac_arrest_prediction.py --evaluate --shap
-```
 
-### Requirements
+### Requirements (library)
 
-```
 torch>=2.0.0
 lightgbm>=4.0.0
 scikit-learn>=1.3.0
@@ -542,13 +536,12 @@ numpy>=1.24.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 scipy>=1.11.0
-```
 
----
+
+
 
 ## 📂 Project Structure
 
-```
 VitalDb-Cardiac-Arrest-Prediction-TAN/
 │
 ├── cardiac_arrest_prediction.py    # Main pipeline script
@@ -588,9 +581,9 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 │
 ├── requirements.txt
 └── README.md
-```
 
----
+
+
 
 ## ⚠️ Limitations & Future Work
 
