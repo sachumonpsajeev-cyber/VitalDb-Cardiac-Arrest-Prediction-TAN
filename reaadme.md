@@ -159,8 +159,6 @@ ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 | **TAN** | `4-head attention, FC(64,32), Focal Loss γ=2, batch=16` | SMOTE-ENN + Focal Loss |
 | **TAN+LSTM Ensemble** | `α=0.90 (TAN) + 0.10 (LSTM)` | 11-step grid search |
 
----
-
 ## 📁 Dataset — VitalDB
 
 | Property | Details |
@@ -192,7 +190,6 @@ VitalDB does not include a direct cardiac arrest flag. CA was identified using a
 
 > **Limitation:** Epinephrine may also be given for anaphylaxis or refractory hypotension. A sensitivity analysis shows all models retain AUROC > 0.91 under a conservative 20% label contamination assumption.
 
----
 
 ## 🔬 Feature Engineering
 
