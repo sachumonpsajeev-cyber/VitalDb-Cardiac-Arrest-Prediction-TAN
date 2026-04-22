@@ -208,7 +208,7 @@ For each of the **six vital sign channels**, six statistical descriptors were ex
 
 The slope descriptor captures *directional* deterioration — a patient whose mean arterial pressure is declining is at higher risk than one whose average is identical but stable. The maximum captures *reserve capacity* — whether the patient can still reach an adequate peak blood pressure within the window.
 
-```python
+
 
 Feature extraction per channel per window
 features = {
@@ -251,7 +251,7 @@ The TAN training objective uses Focal Loss (Lin et al., 2017) with γ = 2:
 
 At γ = 2, a correctly classified non-CA case (pt ≈ 1) receives approximately **96% reduction in loss contribution**, redirecting the optimiser's attention toward difficult CA-positive minority cases.
 
----
+
 
 ## 📊 Complete Results
 
@@ -302,7 +302,7 @@ At γ = 2, a correctly classified non-CA case (pt ≈ 1) receives approximately 
 | **0.9** | **0.1** | **0.918** | **Optimal — selected** |
 | 1.0 | 0.0 | 0.883 | Standalone TAN |
 
----
+
 
 ## 🔑 Core Scientific Finding — Attention Weight Monotonicity
 
@@ -332,7 +332,7 @@ If confirmed by future ablation studies, this implies that haemodynamic optimisa
 
 > ⚠️ **Caution:** Attention weights are model-internal. The 240-min preference may reflect genuine physiological signal, richer feature estimates from longer windows, or cohort selection bias (longer surgeries carry higher baseline risk). **Counterfactual ablation** (withholding each window individually and measuring AUROC change) is required before causal claims are made — this is the highest-priority future experiment.
 
----
+
 
 ## 🏥 Clinical Utility Analysis
 
@@ -357,7 +357,7 @@ TAN-LSTM:   5:1  FA:TP  →  ✅ Below alarm fatigue threshold
 PPV ~17% →  ✅ Above clinical engagement threshold
 The TAN ensemble is the **only model** that satisfies both clinical alarm management criteria simultaneously, while still detecting **83.1% of all cardiac arrests** (54 of 65 events).
 
----
+
 
 ## 📈 SHAP Feature Importance
 
@@ -391,7 +391,7 @@ SHAP (SHapley Additive exPlanations) analysis was applied to the LightGBM 60-min
 
 **3. Respiratory signals suppressed:** SpO₂ and ETCO₂ rank 14th and 15th with near-zero SHAP values. This is mechanistically expected — under general anaesthesia with mechanical ventilation, both are actively normalised. This explains exactly why NEWS2 fails in the operating room.
 
----
+
 
 ## 📈 Model Evolution — V1 vs V2 Comparison
 
@@ -432,7 +432,7 @@ This repository represents the **Version 2 (V2)** architecture — a substantial
 
 **Why the 90/10 ensemble split?** Grid search across 11 α values showed that the TAN consistently contributes ~90% of the discriminative weight. This mirrors the finding of Hsu et al. (2024), where a neural component contributed 85–90% of prediction weight in a hybrid cardiac arrest system — suggesting this ratio may be a reproducible property of attention-based CA prediction architectures.
 
----
+
 
 ## 🖥️ Dashboard Screenshots
 
@@ -448,7 +448,7 @@ This repository represents the **Version 2 (V2)** architecture — a substantial
 ### Model Comparison — All Models · All Windows
 [📄 View Full Report — Model Comparison Explainer](model-comparison.pdf)
 
----
+
 
 ## 🛠️ Tech Stack
 
@@ -465,25 +465,24 @@ This repository represents the **Version 2 (V2)** architecture — a substantial
 | **Environment** | Google Colab, VS Code, GitHub |
 | **Dataset** | VitalDB ([vitaldb.net](https://vitaldb.net)) |
 
----
+
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-```bash
+
 Python >= 3.9
 PyTorch >= 2.0
 CUDA (optional, CPU also supported)
-```
 
 ### Installation
 
-```bash
+
 git clone https://github.com/sachumonpsajeev-cyber/VitalDb-Cardiac-Arrest-Prediction-TAN
 cd VitalDb-Cardiac-Arrest-Prediction-TAN
 pip install -r requirements.txt
-```
+
 
 ### Dataset Access
 
@@ -493,7 +492,7 @@ pip install -r requirements.txt
 
 ### Run the Full Pipeline
 
-```bash
+
 # Stage 1: Feature extraction and per-window model training
 python src/feature_engineering.py --windows 30 60 120 240
 
@@ -505,7 +504,6 @@ python src/ensemble_search.py --alpha_steps 11
 
 # Full evaluation with SHAP
 python cardiac_arrest_prediction.py --evaluate --shap
-```
 
 ### Requirements (library)
 torch>=2.0.0
@@ -519,7 +517,6 @@ matplotlib>=3.7.0
 seaborn>=0.12.0
 scipy>=1.11.0
 
----
 
 ## 📂 Project Structure
 VitalDb-Cardiac-Arrest-Prediction-TAN/
@@ -598,7 +595,7 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 
 > **This model is not approved for clinical use.** All results are development-phase estimates from a single-centre dataset and have not been prospectively validated.
 
----
+
 
 ## 📚 Key References
 Kaiser et al. (2020). Incidence and prediction of intraoperative and postoperative cardiac
@@ -614,13 +611,13 @@ and actions. Anaesthesia & Analgesia.
 Vaishali et al. (2025). Enhancing cardiac arrest prediction in imbalanced time-series data
 using SMOTEENN. Procedia Computer Science.
 
----
+
 
 ## 📄 Citation
 
 If you use this work, please cite:
 
-```bibtex
+
 @mastersthesis{sajeev2026tan,
   author    = {Sachu Mon Puthenpuraickpal Sajeev},
   title     = {Predicting Intraoperative Cardiac Arrest Using a Multi-Window
@@ -631,9 +628,9 @@ If you use this work, please cite:
   address   = {Riga, Latvia},
   type      = {MSc Thesis}
 }
-```
 
----
+
+
 
 ## 👤 Author
 
@@ -648,7 +645,7 @@ MSc Data Science & AI — Transport and Telecommunication Institute (TSI), Riga,
 
 </div>
 
----
+
 
 <div align="center">
 
