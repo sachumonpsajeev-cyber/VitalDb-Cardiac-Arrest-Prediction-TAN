@@ -95,6 +95,7 @@ The **NEWS2 score** (National Early Warning Score 2) is the most widely deployed
 
 The result: under general anaesthesia, a patient approaching cardiac arrest may score *lower* on NEWS2 than a stable patient, producing an inverted risk ranking. This thesis confirms this empirically — NEWS2 achieves **AUROC 0.4345 at 30 minutes, below random chance**.
 
+
 NEWS2 in OR at 30 min:  AUROC 0.4345  ← WORSE THAN RANDOM
 ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 
@@ -102,13 +103,12 @@ ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 
 ## 🏗️ Architecture — Two-Stage TAN Pipeline
 
-
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         VitalDB  (6,388 Surgeries)                          │
 │              6 Vital Channels × 4 Prediction Windows × 6 Descriptors        │
 └─────────────────────────┬───────────────────────────────────────────────────┘
-                          │  36-dimensional feature vector per window
-                          ▼
+│  36-dimensional feature vector per window
+▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    STAGE 1 — Per-Window Models                              │
 │                                                                             │
@@ -122,10 +122,10 @@ ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 │  │ AUROC 0.9312 │  │ AUROC 0.9278│  │ AUROC 0.9294 │  │ AUROC 0.8889 │   │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘   │
 └─────────┼─────────────────┼─────────────────┼─────────────────┼───────────┘
-          │                 │                 │                 │
-          └─────────────────┴────────┬────────┴─────────────────┘
-                                     │  4 × 36 = 144-dim input matrix
-                                     ▼
+│                 │                 │                 │
+└─────────────────┴────────┬────────┴─────────────────┘
+│  4 × 36 = 144-dim input matrix
+▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    STAGE 2 — Temporal Attention Network                     │
 │                                                                             │
@@ -139,14 +139,13 @@ ML Ensemble at 30 min:  AUROC 0.9180  ← +0.48 absolute improvement
 │   FC(64, ReLU) → FC(32, ReLU) → Dropout(0.3) → Sigmoid                    │
 │   Training: Focal Loss (γ=2) + SMOTE-ENN + Adam (lr=0.001)                 │
 └─────────────────────────────┬───────────────────────────────────────────────┘
-                              │
-                              ▼
+│
+▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │              FINAL ENSEMBLE — TAN + LSTM (90% / 10% weighting)             │
 │                                                                             │
 │   AUROC: 0.9180  │  Sensitivity: 83.1%  │  False Alarms: 263  │  FA:TP: 5:1 │
 └─────────────────────────────────────────────────────────────────────────────┘
-
 
 ### Model Configurations
 
@@ -212,17 +211,17 @@ For each of the **six vital sign channels**, six statistical descriptors were ex
 
 The slope descriptor captures *directional* deterioration — a patient whose mean arterial pressure is declining is at higher risk than one whose average is identical but stable. The maximum captures *reserve capacity* — whether the patient can still reach an adequate peak blood pressure within the window.
 
+```python
 
-# Feature extraction per channel per window
+Feature extraction per channel per window
 features = {
-    f'{channel}_mean':  window_data.mean(),
-    f'{channel}_std':   window_data.std(),
-    f'{channel}_min':   window_data.min(),
-    f'{channel}_max':   window_data.max(),
-    f'{channel}_range': window_data.max() - window_data.min(),
-    f'{channel}_slope': np.polyfit(np.arange(len(window_data)), window_data, 1)[0]
+f'{channel}_mean':  window_data.mean(),
+f'{channel}_std':   window_data.std(),
+f'{channel}_min':   window_data.min(),
+f'{channel}_max':   window_data.max(),
+f'{channel}_range': window_data.max() - window_data.min(),
+f'{channel}_slope': np.polyfit(np.arange(len(window_data)), window_data, 1)[0]
 }
-
 
 ---
 
@@ -240,13 +239,10 @@ All models were evaluated using **5-fold stratified cross-validation** with case
 ### Class Imbalance Handling
 
 The 90:1 imbalance ratio was addressed with model-specific strategies:
-
-
 Classical ML   →  class_weight = 'balanced'  (inverse frequency weighting)
 LSTM           →  Youden-J optimal threshold  (post-hoc threshold selection)
 TAN            →  SMOTE-ENN (inside CV folds) + Focal Loss γ=2
 Ensemble       →  α = 0.90 TAN weight  (11-point grid search)
-
 
 > ⚠️ **Critical implementation detail:** SMOTE-ENN was applied **exclusively inside each CV fold's training partition**. Applying SMOTE globally before splitting inflates performance estimates by allowing synthetic samples to leak into validation folds (Vaishali et al., 2025). This study implements the correct approach.
 
@@ -254,9 +250,7 @@ Ensemble       →  α = 0.90 TAN weight  (11-point grid search)
 
 The TAN training objective uses Focal Loss (Lin et al., 2017) with γ = 2:
 
-
 <img width="321" height="48" alt="image" src="https://github.com/user-attachments/assets/05ddd90e-e984-4103-ae17-b833974a778c" />
-
 
 At γ = 2, a correctly classified non-CA case (pt ≈ 1) receives approximately **96% reduction in loss contribution**, redirecting the optimiser's attention toward difficult CA-positive minority cases.
 
@@ -335,11 +329,8 @@ The TAN's cross-window attention weights increase monotonically from the 30-minu
 - Friedman test: **χ²(3) = 15.00, p = 0.0018** (weight differences across windows)
 
 ### Clinical Translation
-
 Current clinical practice assumes: 30-min window = most predictive (emergency focus)
 This model finds:              240-min window = most predictive (4 hours before event!)
-
-
 If confirmed by future ablation studies, this implies that haemodynamic optimisation strategies could be applied **within the pre-operative preparation window** — before surgical stress is applied — rather than reactively after collapse begins.
 
 > ⚠️ **Caution:** Attention weights are model-internal. The 240-min preference may reflect genuine physiological signal, richer feature estimates from longer windows, or cohort selection bias (longer surgeries carry higher baseline risk). **Counterfactual ablation** (withholding each window individually and measuring AUROC change) is required before causal claims are made — this is the highest-priority future experiment.
@@ -363,14 +354,10 @@ A model with the highest AUROC is not necessarily the most useful clinically. At
 Drew et al. (2014) documented that clinical staff begin **ignoring alarms** when:
 - False alarm-to-true positive ratio exceeds **~9:1**
 - Positive predictive value falls below **~10%**
-
-
 LightGBM:  44:1  FA:TP  →  Would be ignored by clinical staff
 LSTM:      27:1  FA:TP  →  Would be ignored by clinical staff
 TAN-LSTM:   5:1  FA:TP  →  ✅ Below alarm fatigue threshold
-                PPV ~17% →  ✅ Above clinical engagement threshold
-
-
+PPV ~17% →  ✅ Above clinical engagement threshold
 The TAN ensemble is the **only model** that satisfies both clinical alarm management criteria simultaneously, while still detecting **83.1% of all cardiac arrests** (54 of 65 events).
 
 ---
@@ -452,20 +439,17 @@ This repository represents the **Version 2 (V2)** architecture — a substantial
 
 ## 🖥️ Dashboard Screenshots
 
+### Ablation Study — TAN-LSTM vs LSTM-only
+[📄 View Full Report — Ablation Study](ablation.pdf)
+
 ### Real Data — Single Patient View
 [📄 View Full Dashboard — Real Single Patient](real-single.pdf)
 
-### Real Data — Compare 2 Patients
-[📄 View Full Dashboard — Real Two Patient Comparison](real-two%20patient.pdf)
-
-### Synthetic Mode — CA vs No-CA Overlay
-[📄 View Full Dashboard — Synthetic Overlay](syn-overlay.pdf)
-
-### Synthetic Mode — Side by Side
-[📄 View Full Dashboard — Synthetic Side by Side](syn-side.pdf)
-
-### Synthetic Mode — Single Patient
+### Synthetic Mode — Single Patient (CA Event)
 [📄 View Full Dashboard — Synthetic Single Patient](syn-single.pdf)
+
+### Model Comparison — All Models · All Windows
+[📄 View Full Report — Model Comparison Explainer](model-comparison.pdf)
 
 ---
 
@@ -512,6 +496,7 @@ pip install -r requirements.txt
 
 ### Run the Full Pipeline
 
+```bash
 # Stage 1: Feature extraction and per-window model training
 python src/feature_engineering.py --windows 30 60 120 240
 
@@ -523,9 +508,9 @@ python src/ensemble_search.py --alpha_steps 11
 
 # Full evaluation with SHAP
 python cardiac_arrest_prediction.py --evaluate --shap
+```
 
 ### Requirements (library)
-
 torch>=2.0.0
 lightgbm>=4.0.0
 scikit-learn>=1.3.0
@@ -537,11 +522,9 @@ matplotlib>=3.7.0
 seaborn>=0.12.0
 scipy>=1.11.0
 
-
-
+---
 
 ## 📂 Project Structure
-
 VitalDb-Cardiac-Arrest-Prediction-TAN/
 │
 ├── cardiac_arrest_prediction.py    # Main pipeline script
@@ -573,17 +556,15 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 │   └── model_performance.csv      # Full results table
 │
 ├── dashboard/
+│   ├── ablation.pdf
 │   ├── real-single.pdf
-│   ├── real-two patient.pdf
-│   ├── syn-overlay.pdf
-│   ├── syn-side.pdf
-│   └── syn-single.pdf
+│   ├── syn-single.pdf
+│   └── model-comparison.pdf
 │
 ├── requirements.txt
 └── README.md
 
-
-
+---
 
 ## ⚠️ Limitations & Future Work
 
@@ -623,27 +604,18 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 ---
 
 ## 📚 Key References
-
-```
-Kaiser et al. (2020). Incidence and prediction of intraoperative and postoperative cardiac 
-  arrest in non-cardiac patients. PLOS ONE.
-
-Lee et al. (2022). VitalDB, a high-fidelity multi-parameter vital signs database in surgical 
-  patients. Scientific Data, 9(1), 279.
-
+Kaiser et al. (2020). Incidence and prediction of intraoperative and postoperative cardiac
+arrest in non-cardiac patients. PLOS ONE.
+Lee et al. (2022). VitalDB, a high-fidelity multi-parameter vital signs database in surgical
+patients. Scientific Data, 9(1), 279.
 Lin et al. (2017). Focal loss for dense object detection. Proceedings of ICCV, 2980–2988.
-
 Vaswani et al. (2017). Attention is all you need. Advances in NeurIPS, 30, 5998–6008.
-
-Drew et al. (2014). Insights into the problem of alarm fatigue with physiologic monitor 
-  devices. PLOS ONE, 9(10), e110151.
-
-Meng et al. (2024). Perioperative cardiac arrest: Mnemonic, classification, monitoring, 
-  and actions. Anaesthesia & Analgesia.
-
-Vaishali et al. (2025). Enhancing cardiac arrest prediction in imbalanced time-series data 
-  using SMOTEENN. Procedia Computer Science.
-```
+Drew et al. (2014). Insights into the problem of alarm fatigue with physiologic monitor
+devices. PLOS ONE, 9(10), e110151.
+Meng et al. (2024). Perioperative cardiac arrest: Mnemonic, classification, monitoring,
+and actions. Anaesthesia & Analgesia.
+Vaishali et al. (2025). Enhancing cardiac arrest prediction in imbalanced time-series data
+using SMOTEENN. Procedia Computer Science.
 
 ---
 
