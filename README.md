@@ -27,6 +27,8 @@ to predict cardiac arrest before it happens — giving clinicians time to interv
 | Signals | HR, SpO2, ETCO2, ART_MBP, ART_SBP, ART_DBP |
 
 ---
+## 📊 Interactive Dashboard
+[View Dashboard](./vitaldb_cardiac_arrest_dashboard.html)
 
 ## Model Architecture — TAN-LSTM
 ```
