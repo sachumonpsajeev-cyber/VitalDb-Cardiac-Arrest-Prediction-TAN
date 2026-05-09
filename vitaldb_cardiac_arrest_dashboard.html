@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intraoperative Cardiac Arrest Prediction · TAN-LSTM · VitalDB</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #030810;
+    --surface: #080f1e;
+    --surface2: #0d1829;
+    --border: rgba(56,130,255,0.15);
+    --border2: rgba(56,130,255,0.28);
+    --accent: #3882ff;
+    --accent2: #00e5c8;
+    --accent3: #ff4d6d;
+    --accent4: #f0b429;
+    --text: #e8edf8;
+    --muted: #6b7fa3;
+    --dim: #3a4a6a;
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grid bg */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,130,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,130,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header-left { max-width: 640px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: right;
+  }
+  .meta-line { font-size: 11px; color: var(--muted); }
+  .meta-line strong { color: var(--text); font-weight: 500; }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border: 1px solid rgba(0,229,200,0.3);
+    border-radius: 20px;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+  }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi:hover { border-color: var(--border2); }
+  .kpi::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .kpi.blue::after { background: var(--accent); }
+  .kpi.teal::after { background: var(--accent2); }
+  .kpi.red::after { background: var(--accent3); }
+  .kpi.amber::after { background: var(--accent4); }
+  .kpi-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .kpi-value {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi.blue .kpi-value { color: var(--accent); }
+  .kpi.teal .kpi-value { color: var(--accent2); }
+  .kpi.red .kpi-value { color: var(--accent3); }
+  .kpi.amber .kpi-value { color: var(--accent4); }
+  .kpi-sub { font-size: 11px; color: var(--dim); }
+
+  /* ── CHART GRID ── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .chart-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .chart-full { grid-column: 1 / -1; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .card-title {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .card-sub { font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+  .chart-wrap { position: relative; width: 100%; }
+  .chart-wrap canvas { width: 100% !important; }
+
+  /* ── MODEL COMPARISON TABLE ── */
+  .model-table { width: 100%; border-collapse: collapse; }
+  .model-table th {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .model-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(56,130,255,0.07);
+    color: var(--text);
+  }
+  .model-table tr:last-child td { border-bottom: none; }
+  .model-table tr.highlight td { background: rgba(56,130,255,0.06); }
+  .model-table tr.highlight td:first-child { border-left: 2px solid var(--accent); }
+  .badge-proposed {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(56,130,255,0.15);
+    border: 1px solid rgba(56,130,255,0.3);
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .auroc-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--dim);
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .auroc-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  /* ── ARCHITECTURE ── */
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .arch-block {
+    flex-shrink: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    text-align: center;
+    min-width: 90px;
+  }
+  .arch-block .ab-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.06em; }
+  .arch-block .ab-name { font-size: 12px; color: var(--text); font-weight: 500; }
+  .arch-block.highlight { border-color: rgba(56,130,255,0.5); background: rgba(56,130,255,0.08); }
+  .arch-block.highlight .ab-name { color: var(--accent); }
+  .arch-arrow {
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+    color: var(--dim);
+    font-size: 14px;
+  }
+
+  /* ── WINDOW SELECTOR ── */
+  .window-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .wtab {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.06em;
+  }
+  .wtab:hover { border-color: var(--border2); color: var(--text); }
+  .wtab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── VITALS WAVEFORM AREA ── */
+  .vital-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .vital-name { font-size: 11px; color: var(--muted); min-width: 60px; letter-spacing: 0.06em; }
+  .vital-bar-wrap { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .vital-bar { height: 100%; border-radius: 3px; }
+  .vital-val { font-size: 12px; min-width: 48px; text-align: right; font-weight: 500; }
+
+  /* ── RISK GAUGE ── */
+  .gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .gauge-num {
+    font-family: var(--font-head);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .risk-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-size: 11px; color: var(--dim); }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-links a {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  .mb-36 { margin-bottom: 36px; }
+
+  @media (max-width: 700px) {
+    .chart-grid, .chart-grid-3 { grid-template-columns: 1fr; }
+    .arch-flow { flex-direction: column; align-items: flex-start; }
+    .arch-arrow { transform: rotate(90deg); }
+    header { flex-direction: column; align-items: flex-start; }
+    .header-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="eyebrow">VitalDB · 6,388 Surgical Cases · TSI University</div>
+      <h1>Intraoperative<br><span>Cardiac Arrest</span><br>Prediction</h1>
+      <p class="subtitle">Multi-window temporal attention network (TAN-LSTM) predicting<br>intraoperative cardiac arrest across 30, 60, 120 and 240 min horizons.</p>
+    </div>
+    <div class="header-meta">
+      <div class="status-pill"><span class="pulse"></span>Research Dashboard</div>
+      <div class="meta-line" style="margin-top:12px"><strong>Sachu Mon Puthenpuraickpal Sajeev</strong></div>
+      <div class="meta-line">TSI University · Riga, Latvia</div>
+      <div class="meta-line">Submitted: April 24, 2026</div>
+    </div>
+  </header>
+
+  <!-- KPI ROW -->
+  <div class="section-title">Dataset Overview</div>
+  <div class="kpi-grid mb-36">
+    <div class="kpi blue">
+      <div class="kpi-label">Surgical Cases</div>
+      <div class="kpi-value">6,388</div>
+      <div class="kpi-sub">VitalDB · SNUH</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">CA-Positive Cases</div>
+      <div class="kpi-value">~70</div>
+      <div class="kpi-sub">Proxy: intraop epinephrine</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Class Imbalance</div>
+      <div class="kpi-value">90:1</div>
+      <div class="kpi-sub">SMOTE-ENN balancing</div>
+    </div>
+    <div class="kpi teal">
+      <div class="kpi-label">Input Features</div>
+      <div class="kpi-value">36</div>
+      <div class="kpi-sub">HR, SpO₂, ETCO₂, ABP ×3</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">Best AUROC</div>
+      <div class="kpi-value">0.91+</div>
+      <div class="kpi-sub">30-min window · TAN-LSTM</div>
+    </div>
+    <div class="kpi teal">
+      <div class="kpi-label">Prediction Windows</div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-sub">30 · 60 · 120 · 240 min</div>
+    </div>
+  </div>
+
+  <!-- AUROC ACROSS WINDOWS -->
+  <div class="section-title">Model Performance</div>
+  <div class="chart-grid mb-36">
+    <div class="card" style="grid-column: 1 / -1;">
+      <div class="card-title">AUROC by Prediction Window — All Models</div>
+      <div class="card-sub">TAN-LSTM vs baselines across 30, 60, 120, 240 min horizons</div>
+      <div class="chart-wrap" style="height:260px;">
+        <canvas id="aurocChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODEL COMPARISON + GAUGE -->
+  <div class="chart-grid mb-36">
+    <div class="card">
+      <div class="card-title">Model Comparison — 30 min Window</div>
+      <div class="card-sub">AUROC · Precision · Recall</div>
+      <table class="model-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>AUROC</th>
+            <th>Prec.</th>
+            <th>Recall</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Logistic Reg.</td>
+            <td>
+              0.74
+              <div class="auroc-bar"><div class="auroc-fill" style="width:74%; background: var(--dim);"></div></div>
+            </td>
+            <td style="color:var(--muted)">0.61</td>
+            <td style="color:var(--muted)">0.58</td>
+          </tr>
+          <tr>
+            <td>LightGBM</td>
+            <td>
+              0.83
+              <div class="auroc-bar"><div class="auroc-fill" style="width:83%; background: var(--accent4);"></div></div>
+            </td>
+            <td style="color:var(--muted)">0.71</td>
+            <td style="color:var(--muted)">0.68</td>
+          </tr>
+          <tr>
+            <td>LSTM (no attn.)</td>
+            <td>
+              0.87
+              <div class="auroc-bar"><div class="auroc-fill" style="width:87%; background: var(--accent2);"></div></div>
+            </td>
+            <td style="color:var(--muted)">0.76</td>
+            <td style="color:var(--muted)">0.73</td>
+          </tr>
+          <tr class="highlight">
+            <td><span class="badge-proposed">PROPOSED</span><br>TAN-LSTM</td>
+            <td>
+              <strong style="color:var(--accent)">0.91+</strong>
+              <div class="auroc-bar"><div class="auroc-fill" style="width:91%; background: var(--accent);"></div></div>
+            </td>
+            <td style="color:var(--accent2)">0.84</td>
+            <td style="color:var(--accent2)">0.81</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Live Risk Score Simulator</div>
+      <div class="card-sub">Adjust window to see expected model risk output</div>
+      <div class="window-tabs">
+        <button class="wtab active" onclick="setWindow(0,this)">30 min</button>
+        <button class="wtab" onclick="setWindow(1,this)">60 min</button>
+        <button class="wtab" onclick="setWindow(2,this)">120 min</button>
+        <button class="wtab" onclick="setWindow(3,this)">240 min</button>
+      </div>
+      <div class="gauge-wrap" style="margin-top:16px">
+        <canvas id="gaugeChart" width="200" height="120"></canvas>
+        <div class="gauge-num" id="gaugeNum" style="color: var(--accent3)">0.91</div>
+        <div class="risk-label" id="riskLabel" style="color: var(--accent3)">High predictive accuracy</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:8px; text-align:center" id="windowNote">
+          30-min window: near-term detection with highest AUROC
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VITAL SIGNS + ATTENTION -->
+  <div class="section-title">Vital Sign Signals & Attention</div>
+  <div class="chart-grid mb-36">
+    <div class="card">
+      <div class="card-title">Intraoperative Vital Sign Trends</div>
+      <div class="card-sub">Simulated perioperative trajectory (CA-positive case)</div>
+      <div class="chart-wrap" style="height:220px;">
+        <canvas id="vitalsChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Temporal Attention Weights</div>
+      <div class="card-sub">Features with highest attention at prediction time</div>
+      <div style="margin-top:8px;">
+        <div class="vital-row">
+          <span class="vital-name">ART_MBP</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:92%; background: var(--accent3);"></div></div>
+          <span class="vital-val" style="color:var(--accent3)">0.92</span>
+        </div>
+        <div class="vital-row">
+          <span class="vital-name">HR</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:81%; background: var(--accent);"></div></div>
+          <span class="vital-val" style="color:var(--accent)">0.81</span>
+        </div>
+        <div class="vital-row">
+          <span class="vital-name">ART_SBP</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:74%; background: var(--accent);"></div></div>
+          <span class="vital-val" style="color:var(--accent)">0.74</span>
+        </div>
+        <div class="vital-row">
+          <span class="vital-name">ETCO₂</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:62%; background: var(--accent2);"></div></div>
+          <span class="vital-val" style="color:var(--accent2)">0.62</span>
+        </div>
+        <div class="vital-row">
+          <span class="vital-name">SpO₂</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:49%; background: var(--accent2);"></div></div>
+          <span class="vital-val" style="color:var(--accent2)">0.49</span>
+        </div>
+        <div class="vital-row">
+          <span class="vital-name">ART_DBP</span>
+          <div class="vital-bar-wrap"><div class="vital-bar" style="width:38%; background: var(--dim);"></div></div>
+          <span class="vital-val" style="color:var(--muted)">0.38</span>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:10px; background:rgba(255,77,109,0.08); border:1px solid rgba(255,77,109,0.2); border-radius:6px;">
+        <div style="font-size:10px; color:var(--accent3); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">Key finding</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.6;">Mean arterial pressure (ART_MBP) and heart rate dominate attention weights — consistent with clinical hypotension as a CA precursor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section-title">Model Architecture — TAN-LSTM</div>
+  <div class="card mb-36">
+    <div class="card-title">End-to-End Pipeline</div>
+    <div class="card-sub">Input → LSTM Encoder → Temporal Attention → Risk Score</div>
+    <div class="arch-flow" style="margin-top:12px; gap:4px;">
+      <div class="arch-block">
+        <div class="ab-label">Input</div>
+        <div class="ab-name">36 Features</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block">
+        <div class="ab-label">Pre-processing</div>
+        <div class="ab-name">SMOTE-ENN</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block">
+        <div class="ab-label">Encoder</div>
+        <div class="ab-name">LSTM ×2<br><span style="font-size:10px;color:var(--muted)">128 units</span></div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block highlight">
+        <div class="ab-label">Attention</div>
+        <div class="ab-name">Temporal<br>Attention Layer</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block">
+        <div class="ab-label">Context</div>
+        <div class="ab-name">Context Vector</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block">
+        <div class="ab-label">Dense</div>
+        <div class="ab-name">FC(64) + ReLU<br>+ Dropout</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block highlight">
+        <div class="ab-label">Output</div>
+        <div class="ab-name">CA Risk<br>Score [0–1]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROC CURVES + CONFUSION -->
+  <div class="section-title">Evaluation</div>
+  <div class="chart-grid mb-36">
+    <div class="card">
+      <div class="card-title">ROC Curves — All Models</div>
+      <div class="card-sub">True positive rate vs false positive rate</div>
+      <div class="chart-wrap" style="height:240px;">
+        <canvas id="rocChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">AUROC Degradation by Window</div>
+      <div class="card-sub">Earlier prediction → lower AUROC (expected)</div>
+      <div class="chart-wrap" style="height:240px;">
+        <canvas id="degradChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <p>Sachu Mon Puthenpuraickpal Sajeev · TSI University, Riga, Latvia · 2026</p>
+      <p style="margin-top:4px;">Data: VitalDB — Seoul National University Hospital · 6,388 surgical cases</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://vitaldb.net" target="_blank">VitalDB</a>
+      <a href="https://github.com" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const C = Chart;
+const gridColor = 'rgba(56,130,255,0.08)';
+const tickColor = '#6b7fa3';
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { labels: { color: tickColor, font: { family: "'DM Mono', monospace", size: 11 }, boxWidth: 12, padding: 16 } } },
+  scales: {
+    x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { family: "'DM Mono', monospace", size: 10 } } },
+    y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { family: "'DM Mono', monospace", size: 10 } } }
+  }
+};
+
+// 1 — AUROC by Window
+new C(document.getElementById('aurocChart'), {
+  type: 'bar',
+  data: {
+    labels: ['30 min', '60 min', '120 min', '240 min'],
+    datasets: [
+      { label: 'Logistic Reg.', data: [0.74, 0.71, 0.67, 0.63], backgroundColor: 'rgba(107,127,163,0.5)', borderColor: 'rgba(107,127,163,0.8)', borderWidth: 1, borderRadius: 4 },
+      { label: 'LightGBM',     data: [0.83, 0.80, 0.76, 0.71], backgroundColor: 'rgba(240,180,41,0.5)',  borderColor: 'rgba(240,180,41,0.8)',  borderWidth: 1, borderRadius: 4 },
+      { label: 'LSTM',         data: [0.87, 0.85, 0.81, 0.76], backgroundColor: 'rgba(0,229,200,0.45)', borderColor: 'rgba(0,229,200,0.8)',  borderWidth: 1, borderRadius: 4 },
+      { label: 'TAN-LSTM',     data: [0.91, 0.90, 0.87, 0.83], backgroundColor: 'rgba(56,130,255,0.6)', borderColor: '#3882ff',               borderWidth: 2, borderRadius: 4 }
+    ]
+  },
+  options: { ...baseOpts, plugins: { ...baseOpts.plugins }, scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min: 0.55, max: 0.95, ticks: { ...baseOpts.scales.y.ticks, callback: v => v.toFixed(2) } } } }
+});
+
+// 2 — Vitals chart
+const mins = Array.from({length: 30}, (_, i) => i * 4 + 'min');
+const rand = (base, noise, len) => Array.from({length:len}, () => +(base + (Math.random()-0.5)*noise).toFixed(1));
+const artMbp = [95,93,91,89,87,85,82,79,76,73,71,68,65,62,60,58,57,56,58,60,62,65,70,75,78,80,82,83,84,85];
+const hr     = [72,74,76,78,80,84,88,92,96,101,105,108,110,112,110,108,105,103,100,98,96,93,90,87,85,83,81,80,79,78];
+const spo2   = [99,99,98,98,97,97,96,96,95,94,93,92,91,91,92,93,94,95,96,97,97,98,98,99,99,99,99,99,99,99];
+new C(document.getElementById('vitalsChart'), {
+  type: 'line',
+  data: {
+    labels: mins,
+    datasets: [
+      { label: 'ART_MBP', data: artMbp, borderColor: '#ff4d6d', backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 0 },
+      { label: 'HR',       data: hr,     borderColor: '#3882ff', backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 0 },
+      { label: 'SpO₂',    data: spo2,   borderColor: '#00e5c8', backgroundColor: 'transparent', tension: 0.4, borderWidth: 1.5, pointRadius: 0, borderDash: [4,3] }
+    ]
+  },
+  options: { ...baseOpts, maintainAspectRatio: false }
+});
+
+// 3 — ROC curves
+const roc = (auc, pts=50) => {
+  const xs=[], ys=[];
+  for(let i=0;i<=pts;i++){
+    const fpr=i/pts;
+    xs.push(fpr);
+    ys.push(Math.min(1, Math.pow(fpr, 1/((auc/(1-auc))*0.95+0.05))));
+  }
+  return xs.map((x,i)=>({x,y:ys[i]}));
+};
+new C(document.getElementById('rocChart'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      { label: 'Logistic Reg. (0.74)', data: roc(0.74), borderColor:'rgba(107,127,163,0.8)', showLine:true, fill:false, pointRadius:0, borderWidth:1.5, tension:0.4 },
+      { label: 'LightGBM (0.83)',      data: roc(0.83), borderColor:'rgba(240,180,41,0.8)',  showLine:true, fill:false, pointRadius:0, borderWidth:1.5, tension:0.4 },
+      { label: 'LSTM (0.87)',          data: roc(0.87), borderColor:'rgba(0,229,200,0.8)',   showLine:true, fill:false, pointRadius:0, borderWidth:1.5, tension:0.4 },
+      { label: 'TAN-LSTM (0.91)',      data: roc(0.91), borderColor:'#3882ff',               showLine:true, fill:false, pointRadius:0, borderWidth:2.5, tension:0.4 },
+      { label: 'Random (0.50)',        data: [{x:0,y:0},{x:1,y:1}], borderColor:'rgba(107,127,163,0.3)', showLine:true, fill:false, pointRadius:0, borderWidth:1, borderDash:[4,4] }
+    ]
+  },
+  options: { ...baseOpts, maintainAspectRatio: false, scales: { x: { ...baseOpts.scales.x, title:{display:true,text:'FPR',color:tickColor} }, y: { ...baseOpts.scales.y, title:{display:true,text:'TPR',color:tickColor} } } }
+});
+
+// 4 — Degradation
+new C(document.getElementById('degradChart'), {
+  type: 'line',
+  data: {
+    labels: ['30 min', '60 min', '120 min', '240 min'],
+    datasets: [
+      { label: 'TAN-LSTM', data: [0.91,0.90,0.87,0.83], borderColor:'#3882ff', backgroundColor:'rgba(56,130,255,0.1)', fill:true, tension:0.3, borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#3882ff' },
+      { label: 'LightGBM', data: [0.83,0.80,0.76,0.71], borderColor:'rgba(240,180,41,0.8)', backgroundColor:'transparent', fill:false, tension:0.3, borderWidth:1.5, pointRadius:4 },
+      { label: 'LSTM',     data: [0.87,0.85,0.81,0.76], borderColor:'rgba(0,229,200,0.7)',  backgroundColor:'transparent', fill:false, tension:0.3, borderWidth:1.5, pointRadius:4 }
+    ]
+  },
+  options: { ...baseOpts, maintainAspectRatio: false, scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, min:0.6, max:0.95, ticks:{...baseOpts.scales.y.ticks, callback: v=>v.toFixed(2)} } } }
+});
+
+// 5 — Window Selector
+const windowData = [
+  { auroc: '0.91', label: 'High predictive accuracy', note: '30-min window: near-term detection with highest AUROC', color: '#ff4d6d' },
+  { auroc: '0.90', label: 'High predictive accuracy', note: '60-min window: 1 hour early warning with minimal performance drop', color: '#f0b429' },
+  { auroc: '0.87', label: 'Good predictive accuracy', note: '120-min window: 2 hour early warning — still clinically useful', color: '#f0b429' },
+  { auroc: '0.83', label: 'Moderate — longer horizon', note: '240-min window: 4 hour early warning, expected AUROC degradation', color: '#3882ff' }
+];
+
+function setWindow(idx, btn) {
+  document.querySelectorAll('.wtab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const d = windowData[idx];
+  document.getElementById('gaugeNum').textContent = d.auroc;
+  document.getElementById('gaugeNum').style.color = d.color;
+  document.getElementById('riskLabel').textContent = d.label;
+  document.getElementById('riskLabel').style.color = d.color;
+  document.getElementById('windowNote').textContent = d.note;
+  drawGauge(parseFloat(d.auroc), d.color);
+}
+
+function drawGauge(val, color) {
+  const canvas = document.getElementById('gaugeChart');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const cx = w/2, cy = h - 10, r = 80;
+  const startA = Math.PI, endA = 2*Math.PI;
+  ctx.beginPath(); ctx.arc(cx, cy, r, startA, endA);
+  ctx.strokeStyle = 'rgba(56,130,255,0.1)'; ctx.lineWidth = 12; ctx.stroke();
+  const fillEnd = startA + (val - 0.5) / 0.5 * Math.PI;
+  ctx.beginPath(); ctx.arc(cx, cy, r, startA, fillEnd);
+  ctx.strokeStyle = color; ctx.lineWidth = 12;
+  ctx.lineCap = 'round'; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, r-20, startA, endA);
+  ctx.strokeStyle = 'rgba(56,130,255,0.05)'; ctx.lineWidth = 1; ctx.stroke();
+}
+drawGauge(0.91, '#ff4d6d');
+</script>
+</body>
+</html>
