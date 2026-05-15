@@ -11,7 +11,8 @@
 ![Status](https://img.shields.io/badge/Status-Research%20Complete-brightgreen?style=flat-square)
 
 *Master's Thesis · TSI University, Riga, Latvia · April 2026*  
-*Author: Sachu Mon Puthenpuraickpal Sajeev*
+*Author: Sachu Mon Puthenpuraickpal Sajeev*  
+*Supervisor: Prof. Merchan Cruz Emmanuel Alejandro, Ph.D.*
 
 </div>
 
@@ -233,6 +234,9 @@ MIT License — see [LICENSE](LICENSE) for details.
 **Sachu Mon Puthenpuraickpal Sajeev**  
 MSc Student · TSI University, Riga, Latvia  
 Submitted: April 24, 2026
+
+**Supervisor: Prof. Merchan Cruz Emmanuel Alejandro, Ph.D.**  
+TSI University, Riga, Latvia
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/sachumonpsajeev)
 [![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github)](https://github.com/sachumonpsajeev-cyber)
