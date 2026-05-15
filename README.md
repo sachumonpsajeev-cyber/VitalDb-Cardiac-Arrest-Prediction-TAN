@@ -10,9 +10,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Research%20Complete-brightgreen?style=flat-square)
 
-**[📊 View Live Interactive Dashboard →](https://sachumonpsajeev-cyber.github.io/VitalDb-Cardiac-Arrest-Prediction-TAN/vitaldb_cardiac_arrest_dashboard.html)**
-
-*Master's Thesis · TSI University, Riga, Latvia · April 2026*
+*Master's Thesis · TSI University, Riga, Latvia · April 2026*  
 *Author: Sachu Mon Puthenpuraickpal Sajeev*
 
 </div>
@@ -24,6 +22,45 @@
 Intraoperative cardiac arrest (CA) carries a **50–70% mortality rate**. Existing early warning systems rely on static threshold alerts and fail to capture the complex temporal dynamics present in continuous intraoperative vital sign streams.
 
 This project builds a **deep learning pipeline** that predicts cardiac arrest up to **4 hours before occurrence**, giving clinicians a meaningful intervention window — without requiring any additional hardware or monitoring changes.
+
+---
+
+## 🖥️ Prototype Dashboards
+
+Five prototype dashboard views were developed to demonstrate the system across real and simulated clinical scenarios, covering single-patient monitoring, head-to-head patient comparison, and CA vs No-CA signal analysis.
+
+### 🌐 Real Data — VitalDB
+
+**Single Patient View**
+> Displays a single real patient case from VitalDB. Shows CA risk score per prediction window, vital signal trends reconstructed from CSV features, SHAP interpretability charts, and a change point log.
+
+📄 [View — Real Data · Single Patient (PDF)](real-single.pdf)
+
+**Compare 2 Patients View**
+> Side-by-side comparison of two real VitalDB patients (one CA-positive, one No-CA). Risk comparison summary, independent vital signal traces, and per-patient change point logs with timestamped out-of-range alerts.
+
+📄 [View — Real Data · Compare 2 Patients (PDF)](real-two_patient.pdf)
+
+---
+
+### 🚀 Synthetic — Deep Dive
+
+> All waveforms in the synthetic views are algorithmically generated from configurable parameters (deterioration rate, onset timing, noise level). Designed for thesis presentations and clinical model explanation without needing real patient access.
+
+**Single Patient View**
+> Configurable single synthetic patient with a full deterioration phase timeline (stable → early deterioration → acute crisis), risk score over time, and SHAP feature interpretability.
+
+📄 [View — Synthetic · Single Patient (PDF)](syn-single.pdf)
+
+**Side-by-Side View**
+> Two synthetic patients (CA Event vs No CA) displayed in parallel panels. Allows direct visual comparison of vital signal trajectories and risk score divergence over the surgery duration.
+
+📄 [View — Synthetic · Side-by-Side (PDF)](syn-side.pdf)
+
+**CA vs No-CA Overlay View**
+> CA and No-CA waveforms overlaid on the same chart axes (red = CA, blue dashed = No CA) with a shared risk score overlay. Highlights the divergence in signals as the CA event approaches.
+
+📄 [View — Synthetic · CA vs No-CA Overlay (PDF)](syn-overlay.pdf)
 
 ---
 
@@ -122,8 +159,7 @@ VitalDb-Cardiac-Arrest-Prediction-TAN/
 ├── models/                      # Saved model weights
 ├── results/                     # Outputs & figures
 ├── docs/                        # Thesis documentation
-├── vitaldb_cardiac_arrest_dashboard.html   # 📊 Interactive BI dashboard
-├── vitaldb_thesis_local.ipynb              # Full local notebook
+├── vitaldb_thesis_local.ipynb   # Full local notebook
 ├── requirements.txt
 ├── LICENSE
 └── README.md
@@ -149,9 +185,6 @@ pip install -r requirements.txt
 jupyter notebook notebooks/01_EDA.ipynb
 ```
 
-### 4. View the dashboard
-Open `vitaldb_cardiac_arrest_dashboard.html` in any browser — or visit the **[live link](https://sachumonpsajeev-cyber.github.io/VitalDb-Cardiac-Arrest-Prediction-TAN/vitaldb_cardiac_arrest_dashboard.html)**.
-
 ---
 
 ## 🛠️ Tech Stack
@@ -165,21 +198,7 @@ Open `vitaldb_cardiac_arrest_dashboard.html` in any browser — or visit the **[
 | Data Processing | Pandas, NumPy |
 | Visualization | Matplotlib, Plotly, Chart.js |
 | Data Source | VitalDB Python SDK |
-| Dashboard | HTML5 / JavaScript (single file) |
 | Version Control | Git, GitHub |
-
----
-
-## 📊 Interactive Dashboard
-
-A standalone single-file HTML dashboard visualizing:
-- AUROC performance across all 4 windows and all models
-- ROC curves comparison
-- Temporal attention weight ranking per vital sign
-- Intraoperative vital sign trends (CA-positive case)
-- Live risk score simulator per prediction window
-
-**[→ Open Dashboard](https://sachumonpsajeev-cyber.github.io/VitalDb-Cardiac-Arrest-Prediction-TAN/vitaldb_cardiac_arrest_dashboard.html)**
 
 ---
 
@@ -211,8 +230,8 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## 👤 Author
 
-**Sachu Mon Puthenpuraickpal Sajeev**
-MSc Student · TSI University, Riga, Latvia
+**Sachu Mon Puthenpuraickpal Sajeev**  
+MSc Student · TSI University, Riga, Latvia  
 Submitted: April 24, 2026
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/sachumonpsajeev)
