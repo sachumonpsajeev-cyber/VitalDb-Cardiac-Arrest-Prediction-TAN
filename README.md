@@ -35,12 +35,12 @@ Five prototype dashboard views were developed to demonstrate the system across r
 **Single Patient View**
 > Displays a single real patient case from VitalDB. Shows CA risk score per prediction window, vital signal trends reconstructed from CSV features, SHAP interpretability charts, and a change point log.
 
-📄 [View — Real Data · Single Patient (PDF)](real-single.pdf)
+📄[View — Real Data · Single Patient (PDF)](dashboard-images/real-single.pdf)
 
 **Compare 2 Patients View**
 > Side-by-side comparison of two real VitalDB patients (one CA-positive, one No-CA). Risk comparison summary, independent vital signal traces, and per-patient change point logs with timestamped out-of-range alerts.
 
-📄 [View — Real Data · Compare 2 Patients (PDF)](real-two_patient.pdf)
+📄[View — Real Data · Compare 2 Patients (PDF)](dashboard-images/real-two_patient.pdf)
 
 ---
 
@@ -51,7 +51,7 @@ Five prototype dashboard views were developed to demonstrate the system across r
 **Single Patient View**
 > Configurable single synthetic patient with a full deterioration phase timeline (stable → early deterioration → acute crisis), risk score over time, and SHAP feature interpretability.
 
-📄 [View — Synthetic · Single Patient (PDF)](syn-single.pdf)
+📄 [View — Synthetic · Single Patient (PDF)](dashboard-images/syn-single.pdf)
 
 **Side-by-Side View**
 > Two synthetic patients (CA Event vs No CA) displayed in parallel panels. Allows direct visual comparison of vital signal trajectories and risk score divergence over the surgery duration.
@@ -61,7 +61,7 @@ Five prototype dashboard views were developed to demonstrate the system across r
 **CA vs No-CA Overlay View**
 > CA and No-CA waveforms overlaid on the same chart axes (red = CA, blue dashed = No CA) with a shared risk score overlay. Highlights the divergence in signals as the CA event approaches.
 
-📄 [View — Synthetic · CA vs No-CA Overlay (PDF)](syn-overlay.pdf)
+📄 [View — Synthetic · CA vs No-CA Overlay (PDF)](dashboard-images/syn-overlay.pdf)
 
 ---
 
