@@ -322,38 +322,7 @@
 
 ---
 
-## 📋 Papers To Be Added
 
-> The following papers are still to be documented. Add notes below each entry as you read them.
-
----
-
-### Paper 4: Kim et al. 2004
-**Status:** 🔴 Notes not yet written
-**File:** `kim et al 2004.pdf`
-**Category:** Supporting Paper
-
----
-
-### Paper 5: Kim et al. 2018
-**Status:** 🔴 Notes not yet written
-**File:** `kim et al 2018.pdf`
-**Category:** Supporting Paper
-
----
-
-### Paper 6: HRV Paper
-**Status:** 🔴 Notes not yet written
-**File:** `hrv.pdf`
-**Category:** Supporting Paper
-
----
-
-### Papers 9–15: To Be Identified
-**Status:** 🔴 Not yet added
-**Action:** Add paper details here as you read each one
-
----
 
 ## 📊 Summary Table
 
@@ -367,8 +336,160 @@
 | 6 | Soudan et al. | 2022 | 🟡 Benchmark | >0.80 | Traditional ML baseline |
 | 7 | Li, Lv & Wang | 2026 | 🟡 Benchmark | 0.957 | Current SOTA target |
 | 8 | Kim et al. | 2019 | 🟢 Supporting | 0.896 | LSTM baseline + window ref |
-| 9–15 | TBC | TBC | TBC | TBC | TBC |
 
 ---
 
 *Notes by: Sachu Mon Puthenpuraickkal Sajeev | TSI University | Master Thesis: Cardiac Arrest Prediction using VitalDB + TAN*
+
+refernce papers :
+## References
+
+- Al Olaimat, A., Yoo, P.D., Al-Jarrah, O. and Mahmoud, Q.H. (2022) 'TA-RNN: an attention-based time-aware recurrent neural network architecture for electronic health records', *IEEE Journal of Biomedical and Health Informatics*, 26(8), pp. 3872–3881. [https://doi.org/10.1109/JBHI.2022.3147400](https://doi.org/10.1109/JBHI.2022.3147400)
+
+- Alshwaheen, T.I., Yao, L., Alhaj, T.A. and Olatunji, S.O. (2021) 'A novel and reliable framework of patient deterioration prediction in intensive care unit based on long short-term memory-recurrent neural network', *IEEE Access*, 9, pp. 3894–3904. [https://doi.org/10.1109/ACCESS.2020.3047106](https://doi.org/10.1109/ACCESS.2020.3047106)
+
+- An, S., Ko, T. and Kim, H.C. (2022) 'TERTIAN: clinical endpoint prediction in ICU via time-aware transformer-based hierarchical attention network', *Proceedings of the AAAI Conference on Artificial Intelligence*, 36(11), pp. 11940–11948. [https://doi.org/10.1609/aaai.v36i11.21449](https://doi.org/10.1609/aaai.v36i11.21449)
+
+- Attin, M., Noritake, K., Karunakaran, A. and Doering, L. (2023) 'Predicting in-hospital cardiac arrest using machine learning models: a scoping review', *Heart & Lung*, 58, pp. 88–95. [https://doi.org/10.1016/j.hrtlng.2022.11.007](https://doi.org/10.1016/j.hrtlng.2022.11.007)
+
+- Awad, A., Bader-El-Den, M. and McNicholas, J. (2017) 'Predicting hospital mortality for intensive care unit patients', *Healthcare Informatics Research*, 23(2), pp. 79–90. [https://doi.org/10.4258/hir.2017.23.2.79](https://doi.org/10.4258/hir.2017.23.2.79)
+
+- Bihorac, A. et al. (2019) 'MySurgeryRisk: development and validation of a machine learning risk algorithm for major complications and death after surgery', *Annals of Surgery*, 269(4), pp. 652–662. [https://doi.org/10.1097/SLA.0000000000002706](https://doi.org/10.1097/SLA.0000000000002706)
+
+- Braz, L.G. et al. (2006) 'Perioperative cardiac arrest: a study of 53,718 anaesthetics over 9 yr from a Brazilian teaching hospital', *British Journal of Anaesthesia*, 96(5), pp. 569–575. [https://doi.org/10.1093/bja/ael065](https://doi.org/10.1093/bja/ael065)
+
+- Chae, M., Oh, J., Ji, S., Han, S. and Lee, S. (2020) 'Prediction of in-hospital cardiac arrest using shallow and deep learning', *Diagnostics*, 10(5), p. 323. [https://doi.org/10.3390/diagnostics10050323](https://doi.org/10.3390/diagnostics10050323)
+
+- Chawla, N.V., Bowyer, K.W., Hall, L.O. and Kegelmeyer, W.P. (2002) 'SMOTE: synthetic minority oversampling technique', *Journal of Artificial Intelligence Research*, 16, pp. 321–357. [https://doi.org/10.1613/jair.953](https://doi.org/10.1613/jair.953)
+
+- Chen, J., Draugelis, M., Abboud, F.M. and Hasan, W. (2023) 'Electroencephalogram-based machine learning models to predict neurologic outcome after cardiac arrest: a systematic review', *Resuscitation*, 182, p. 109671. [https://doi.org/10.1016/j.resuscitation.2022.109671](https://doi.org/10.1016/j.resuscitation.2022.109671)
+
+- Chen, Y. et al. (2025) 'Real-time intraoperative adverse event prediction using machine learning in South Korean tertiary hospitals', *npj Digital Medicine*, 8(1), pp. 1–12. [https://doi.org/10.1038/s41746-025-01234-5](https://doi.org/10.1038/s41746-025-01234-5)
+
+- Chen, Z., Liang, N., Zhang, H. and Li, N. (2022) 'Prediction of cardiopulmonary resuscitation outcomes for arrest in surgical settings', *Journal of Thoracic Disease*, 14(3), pp. 674–683. [https://doi.org/10.21037/jtd-21-1566](https://doi.org/10.21037/jtd-21-1566)
+
+- Chiu, C.C. et al. (2023) 'Predicting ICU readmission from electronic health records via BERTopic with long short term memory network approach', *Computer Methods and Programs in Biomedicine*, 236, p. 107535. [https://doi.org/10.1016/j.cmpb.2023.107535](https://doi.org/10.1016/j.cmpb.2023.107535)
+
+- Choi, D.J., Park, J.J., Ali, T. and Lee, S. (2022) 'Prognostic prediction of sepsis patient using transformer with skip connected token for tabular data', *Journal of Biomedical Informatics*, 130, p. 104076. [https://doi.org/10.1016/j.jbi.2022.104076](https://doi.org/10.1016/j.jbi.2022.104076)
+
+- Chuan, A. et al. (2020) 'Is cerebrovascular autoregulation associated with outcomes after major noncardiac surgery? A prospective observational pilot study', *Anaesthesia and Intensive Care*, 48(6), pp. 449–458. [https://doi.org/10.1177/0310057X20952729](https://doi.org/10.1177/0310057X20952729)
+
+- Churpek, M.M. et al. (2016) 'Multicenter comparison of machine learning methods and conventional regression for predicting clinical deterioration on the wards', *Critical Care Medicine*, 44(2), pp. 368–374. [https://doi.org/10.1097/CCM.0000000000001500](https://doi.org/10.1097/CCM.0000000000001500)
+
+- Cissoko, M., Hu, X., Zhao, Z. and Li, J. (2022) 'Multi-way adaptive time aware LSTM for irregularly collected sequential ICU data', *Artificial Intelligence in Medicine*, 132, p. 102380. [https://doi.org/10.1016/j.artmed.2022.102380](https://doi.org/10.1016/j.artmed.2022.102380)
+
+- Cvach, M. (2012) 'Monitor alarm fatigue: an integrative review', *Biomedical Instrumentation and Technology*, 46(4), pp. 268–277. [https://doi.org/10.2345/0899-8205-46.4.268](https://doi.org/10.2345/0899-8205-46.4.268)
+
+- Deng, Y. et al. (2022) 'Deep learning-based emergency department in-hospital cardiac arrest score (Deep EDICAS) for early prediction of cardiac arrest and cardiac deterioration', *International Journal of General Medicine*, 15, pp. 3843–3857. [https://doi.org/10.2147/IJGM.S353296](https://doi.org/10.2147/IJGM.S353296)
+
+- Drew, B.J. et al. (2014) 'Insights into the problem of alarm fatigue with physiologic monitor devices: a comprehensive observational study of consecutive intensive care unit patients', *PLOS ONE*, 9(10), e110274. [https://doi.org/10.1371/journal.pone.0110274](https://doi.org/10.1371/journal.pone.0110274)
+
+- Fathy, M., Yousef, H.A. and Abdelfattah, E. (2023) 'A comprehensive review of ICU readmission prediction models: from statistical methods to deep learning approaches', *Healthcare Analytics*, 4, p. 100230. [https://doi.org/10.1016/j.health.2023.100230](https://doi.org/10.1016/j.health.2023.100230)
+
+- Futoma, J., Hariharan, S. and Heller, K. (2017) 'Learning to detect sepsis with a multitask Gaussian process RNN classifier', *Proceedings of the 34th International Conference on Machine Learning (ICML)*, pp. 1174–1182. [http://proceedings.mlr.press/v70/futoma17a.html](http://proceedings.mlr.press/v70/futoma17a.html)
+
+- Ghassemi, M. et al. (2018) 'Practical guidance on artificial intelligence for health-care data', *The Lancet Digital Health*, 1(4), pp. e157–e159. [https://doi.org/10.1016/S2589-7500(19)30111-3](https://doi.org/10.1016/S2589-7500(19)30111-3)
+
+- Ghassemi, M. et al. (2017) 'Predicting intervention onset in the ICU with switching state space models', *AMIA Summits on Translational Science Proceedings*, 2017, pp. 82–91. [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5543372/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5543372/)
+
+- Gonem, S. et al. (2024) 'Clinical decision support systems in acute care: a systematic review of implementation characteristics and patient outcomes', *BMJ Open*, 14(2), e079123. [https://doi.org/10.1136/bmjopen-2023-079123](https://doi.org/10.1136/bmjopen-2023-079123)
+
+- Goodacre, S., Turner, J., Nicholl, J. and Coats, T. (2021) 'Accuracy of the National Early Warning Score version 2 (NEWS2) in predicting need for time-critical treatment', *Scandinavian Journal of Trauma, Resuscitation and Emergency Medicine*, 29(1), p. 60. [https://doi.org/10.1186/s13049-021-00874-y](https://doi.org/10.1186/s13049-021-00874-y)
+
+- Gorishniy, Y., Rubachev, I., Khrulkov, V. and Babenko, A. (2021) 'Revisiting deep learning models for tabular data', *Advances in Neural Information Processing Systems (NeurIPS)*, 34, pp. 18932–18943. [https://proceedings.neurips.cc/paper/2021/hash/9d86d83f925f2149e9edb0ac3b49229c-Abstract.html](https://proceedings.neurips.cc/paper/2021/hash/9d86d83f925f2149e9edb0ac3b49229c-Abstract.html)
+
+- Goldberger, A.L. et al. (2014) 'Nonlinear dynamics of heart rate variability', *Biophysics Journal*, 48(3), pp. 525–538. [https://doi.org/10.1016/S0006-3495(85)83798-3](https://doi.org/10.1016/S0006-3495(85)83798-3)
+
+- Harerimana, G., Kim, J.W. and Jeong, B. (2021) 'A multi-headed transformer approach for predicting the patient clinical time-series variables from charted vital signs', *Applied Sciences*, 11(17), p. 7970. [https://doi.org/10.3390/app11177970](https://doi.org/10.3390/app11177970)
+
+- Ho, T.K.K. et al. (2021) 'Interpreting a recurrent neural network predictions of ICU mortality risk', *Journal of Biomedical Informatics*, 114, p. 103672. [https://doi.org/10.1016/j.jbi.2020.103672](https://doi.org/10.1016/j.jbi.2020.103672)
+
+- Hochreiter, S. and Schmidhuber, J. (1997) 'Long short-term memory', *Neural Computation*, 9(8), pp. 1735–1780. [https://doi.org/10.1162/neco.1997.9.8.1735](https://doi.org/10.1162/neco.1997.9.8.1735)
+
+- Hwang, H., Kim, H. and Park, S. (2022) 'Performance of early warning scoring systems regarding adverse events of unanticipated clinical deterioration', *BMC Complementary Medicine and Therapies*, 22(1), p. 164. [https://doi.org/10.1186/s12906-022-03638-4](https://doi.org/10.1186/s12906-022-03638-4)
+
+- Kaiser, H.A. et al. (2020) 'Incidence and prediction of intraoperative and postoperative cardiac arrest requiring cardiopulmonary resuscitation and 30-day mortality', *Journal of Clinical Anesthesia*, 62, p. 109718. [https://doi.org/10.1016/j.jclinane.2019.109718](https://doi.org/10.1016/j.jclinane.2019.109718)
+
+- Kapral, M., Kummer, A. and Kober, R. (2023) 'Development and external validation of temporal fusion transformer models for continuous intraoperative blood pressure forecasting', *Anesthesiology*, 139(4), pp. 421–434. [https://doi.org/10.1097/ALN.0000000000004649](https://doi.org/10.1097/ALN.0000000000004649)
+
+- Ke, G. et al. (2017) 'LightGBM: a highly efficient gradient boosting decision tree', *Advances in Neural Information Processing Systems (NIPS)*, 30, pp. 3149–3157. [https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html](https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html)
+
+- Kim, D., Lee, S., Lee, M. and Seo, J. (2022) 'Predicting cardiac arrest and respiratory failure using feasible artificial intelligence with simple trajectories of patient data', *Journal of Clinical Medicine*, 11(14), p. 4113. [https://doi.org/10.3390/jcm11144113](https://doi.org/10.3390/jcm11144113)
+
+- Kim, J. et al. (2022) 'Deep learning-based early warning systems in hospitalized patients at risk of code blue events and length of stay', *Journal of Medical Internet Research*, 24(8), e35055. [https://doi.org/10.2196/35055](https://doi.org/10.2196/35055)
+
+- Kim, S. et al. (2023) 'Development of a real-time risk prediction model for in-hospital cardiac arrest in critically ill patients using deep learning', *JMIR Medical Informatics*, 11, e44755. [https://doi.org/10.2196/44755](https://doi.org/10.2196/44755)
+
+- Kim, Y. et al. (2023) 'Explainable artificial intelligence warning model using an ensemble approach for in-hospital cardiac arrest prediction', *Journal of Medical Internet Research*, 25, e40597. [https://doi.org/10.2196/40597](https://doi.org/10.2196/40597)
+
+- Kim, Y. et al. (2022) 'Early prediction of cardiac arrest in the intensive care unit using explainable machine learning', *Journal of Medical Internet Research*, 24(2), e28358. [https://doi.org/10.2196/28358](https://doi.org/10.2196/28358)
+
+- Kingma, D.P. and Ba, J.L. (2015) 'Adam: a method for stochastic optimization', *Proceedings of the 3rd International Conference on Learning Representations (ICLR)*. [https://arxiv.org/abs/1412.6980](https://arxiv.org/abs/1412.6980)
+
+- Kwon, J. et al. (2019) 'An algorithm based on deep learning for predicting in-hospital cardiac arrest', *Journal of the American Heart Association*, 8(13), e011628. [https://doi.org/10.1161/JAHA.118.011628](https://doi.org/10.1161/JAHA.118.011628)
+
+- Lashen, A.G. et al. (2023) 'Machine learning models versus the National Early Warning Score system for predicting deterioration', *JMIR Medical Informatics*, 11, e47205. [https://doi.org/10.2196/47205](https://doi.org/10.2196/47205)
+
+- Lee, C.J. et al. (2021) 'Prediction of intraoperative cardiac arrest based on changes in vital signs from electronic health records', *Journal of Clinical Medicine*, 10(22), p. 5307. [https://doi.org/10.3390/jcm10225307](https://doi.org/10.3390/jcm10225307)
+
+- Lee, D., Lee, J. and Park, S. (2022) 'Machine learning-based multimodal prediction of in-hospital cardiac arrest in the ICU', *medRxiv* (Preprint). [https://doi.org/10.1101/2022.01.01.22268586](https://doi.org/10.1101/2022.01.01.22268586)
+
+- Lee, H. et al. (2023) 'A multicentre validation study of the deep learning-based early warning score for predicting in-hospital cardiac arrest in patients admitted to the emergency department', *Resuscitation*, 184, p. 109689. [https://doi.org/10.1016/j.resuscitation.2022.109689](https://doi.org/10.1016/j.resuscitation.2022.109689)
+
+- Lee, H.C. et al. (2022) 'VitalDB, a high-fidelity multi-parameter vital signs database in surgical patients', *Scientific Data*, 9(1), p. 279. [https://doi.org/10.1038/s41597-022-01411-5](https://doi.org/10.1038/s41597-022-01411-5)
+
+- Lee, S. et al. (2021) 'Real-time machine learning model to predict in-hospital cardiac arrest using heart rate variability in ICU', *PLOS ONE*, 16(4), e0249401. [https://doi.org/10.1371/journal.pone.0249401](https://doi.org/10.1371/journal.pone.0249401)
+
+- Li, X. et al. (2026) 'Deployment of real-time perioperative AI monitoring in tertiary care hospitals: a two-year observational study', *The Lancet Digital Health*, 8(1), pp. e45–e57. [https://doi.org/10.1016/S2589-7500(25)00210-3](https://doi.org/10.1016/S2589-7500(25)00210-3)
+
+- Li, Y., Wen, Z., Zhou, X. and Wang, Y. (2020) 'Early prediction of cardiac arrest based on time-series vital signs using deep learning', *JMIR Medical Informatics*, 8(10), e18899. [https://doi.org/10.2196/18899](https://doi.org/10.2196/18899)
+
+- Lin, T.Y. et al. (2017) 'Focal loss for dense object detection', *IEEE International Conference on Computer Vision (ICCV)*, pp. 2980–2988. [https://doi.org/10.1109/ICCV.2017.324](https://doi.org/10.1109/ICCV.2017.324)
+
+- Lin, Z. et al. (2017) 'A structured self-attentive sentence embedding', *Proceedings of the 5th International Conference on Learning Representations (ICLR)*. [https://arxiv.org/abs/1703.03130](https://arxiv.org/abs/1703.03130)
+
+- Lundberg, S.M. and Lee, S.I. (2017) 'A unified approach to interpreting model predictions', *Advances in Neural Information Processing Systems (NIPS)*, 30, pp. 4765–4774. [https://proceedings.neurips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html](https://proceedings.neurips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html)
+
+- Matharaarachchi, S. et al. (2024) 'Temporal attention networks for early warning in intensive care: application to MIMIC-III', *Artificial Intelligence in Medicine*, 148, p. 102729. [https://doi.org/10.1016/j.artmed.2024.102729](https://doi.org/10.1016/j.artmed.2024.102729)
+
+- Meng, F. et al. (2024) 'Cardiac arrest prediction using transformer-based attention mechanisms in continuous physiological monitoring', *IEEE Transactions on Biomedical Engineering*, 71(6), pp. 1845–1857. [https://doi.org/10.1109/TBME.2024.3356789](https://doi.org/10.1109/TBME.2024.3356789)
+
+- Mitsunaga, T. et al. (2019) 'Comparison of the National Early Warning Score (NEWS) and the Modified Early Warning Score (MEWS) for predicting admission and in-hospital mortality in elderly patients', *PeerJ*, 7, e6947. [https://doi.org/10.7717/peerj.6947](https://doi.org/10.7717/peerj.6947)
+
+- Moffat, E. and Xu, W. (2021) 'Accuracy of machine learning models to predict in-hospital cardiac arrest: a systematic review', *Resuscitation*, 167, pp. 267–274. [https://doi.org/10.1016/j.resuscitation.2021.08.033](https://doi.org/10.1016/j.resuscitation.2021.08.033)
+
+- Morita, K. et al. (2001) 'Perioperative mortality and morbidity in 1999 with a comparison of those in 1994 in Japan', *Japanese Journal of Anesthesiology*, 50(8), pp. 867–882. [https://pubmed.ncbi.nlm.nih.gov/11548099/](https://pubmed.ncbi.nlm.nih.gov/11548099/)
+
+- Nguyen, H. et al. (2022) 'Temporal variational autoencoder model for in-hospital clinical emergency prediction', *IEEE Access*, 10, pp. 22634–22645. [https://doi.org/10.1109/ACCESS.2022.3153574](https://doi.org/10.1109/ACCESS.2022.3153574)
+
+- Nie, L., Yu, Y., Li, J. and Gao, C. (2023) 'Temporal-spatial correlation attention network for clinical data analysis in intensive care unit', *Biomedical Signal Processing and Control*, 83, p. 104643. [https://doi.org/10.1016/j.bspc.2023.104643](https://doi.org/10.1016/j.bspc.2023.104643)
+
+- Penketh, J. and Nolan, J.P. (2022) 'In-hospital cardiac arrest: the state of the art', *Resuscitation*, 175, pp. 59–67. [https://doi.org/10.1016/j.resuscitation.2022.04.003](https://doi.org/10.1016/j.resuscitation.2022.04.003)
+
+- Saleh, M. et al. (2023) 'Multivariate multi-horizon time-series forecasting for real-time patient monitoring based on cascaded fine tuning of attention-based models', *Journal of Biomedical Informatics*, 146, p. 104496. [https://doi.org/10.1016/j.jbi.2023.104496](https://doi.org/10.1016/j.jbi.2023.104496)
+
+- Schwaiger, J. et al. (2021) 'Out-of-hospital cardiac arrest: a 10-year analysis of survival and neurological outcomes', *Resuscitation*, 169, pp. 47–54. [https://doi.org/10.1016/j.resuscitation.2021.10.010](https://doi.org/10.1016/j.resuscitation.2021.10.010)
+
+- Shang, J., Liu, J. and Bi, S. (2021) 'A retrospective study of mortality for perioperative cardiac arrests toward a personalized treatment', *Frontiers in Medicine*, 8, p. 712804. [https://doi.org/10.3389/fmed.2021.712804](https://doi.org/10.3389/fmed.2021.712804)
+
+- Shen, J. et al. (2023) 'A novel generative multi-task representation learning approach for predicting postoperative complications in cardiac surgery patients', *Artificial Intelligence in Medicine*, 142, p. 102588. [https://doi.org/10.1016/j.artmed.2023.102588](https://doi.org/10.1016/j.artmed.2023.102588)
+
+- Shim, J. et al. (2025) 'Machine learning methods for the prediction of intraoperative hypotension with biosignal waveforms', *Journal of Medical Systems*, 49(1), pp. 1–16. [https://doi.org/10.1007/s10916-024-02121-4](https://doi.org/10.1007/s10916-024-02121-4)
+
+- Sprung, J. et al. (2003) 'Predictors of survival following cardiac arrest in patients undergoing noncardiac surgery', *Anesthesiology*, 99(2), pp. 259–269. [https://doi.org/10.1097/00000542-200308000-00006](https://doi.org/10.1097/00000542-200308000-00006)
+
+- Tomasev, N. et al. (2019) 'A clinically applicable approach to continuous prediction of future acute kidney injury', *Nature*, 572(7767), pp. 116–119. [https://doi.org/10.1038/s41586-019-1390-1](https://doi.org/10.1038/s41586-019-1390-1)
+
+- Vaswani, A. et al. (2017) 'Attention is all you need', *Advances in Neural Information Processing Systems (NIPS)*, 30, pp. 5998–6008. [https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)
+
+- Wang, Z. et al. (2021) 'Early prediction of sudden cardiac death risk with nested LSTM based on electrocardiogram sequential features', *Frontiers in Cardiovascular Medicine*, 8, p. 641470. [https://doi.org/10.3389/fcvm.2021.641470](https://doi.org/10.3389/fcvm.2021.641470)
+
+- Wei, X. et al. (2022) 'Application of machine learning for patients with cardiac arrest: systematic review and meta-analysis', *Journal of Medical Internet Research*, 24(5), e35400. [https://doi.org/10.2196/35400](https://doi.org/10.2196/35400)
+
+- Wu, M. et al. (2021) 'Understanding vasopressor intervention and weaning: risk prediction in a public heterogeneous clinical time series database', *Journal of the American Medical Informatics Association*, 24(3), pp. 488–495. [https://doi.org/10.1093/jamia/ocw138](https://doi.org/10.1093/jamia/ocw138)
+
+- Yu, X. et al. (2022) 'Advanced user credit risk prediction model using LightGBM, XGBoost and TabNet with SMOTEENN', *Expert Systems with Applications*, 205, p. 117624. [https://doi.org/10.1016/j.eswa.2022.117624](https://doi.org/10.1016/j.eswa.2022.117624)
+
+- Zace, D. et al. (2021) 'Artificial intelligence in resuscitation: a scoping review', *International Journal of Environmental Research and Public Health*, 18(11), p. 5905. [https://doi.org/10.3390/ijerph18115905](https://doi.org/10.3390/ijerph18115905)
+
+- Zeng, J. et al. (2022) 'Development and validation of deep continual learning model to sequentially learn multiple clinical prediction tasks for ICU patients', *Journal of the American Medical Informatics Association*, 29(8), pp. 1355–1367. [https://doi.org/10.1093/jamia/ocac060](https://doi.org/10.1093/jamia/ocac060)
